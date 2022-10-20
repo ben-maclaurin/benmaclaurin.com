@@ -1,2 +1,4 @@
 .DS_Store
+content/post/.obsidian*
 server/
+

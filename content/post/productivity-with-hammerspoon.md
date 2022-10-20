@@ -39,3 +39,7 @@ end
 ```
 
 I've published the full config file on [GitHub](https://github.com/ben-maclaurin/hammerspoon/blob/main/init.lua).
+
+## Update 20/10/2022
+
+As of 10/22, I use [Rectangle]() with the same keymappings.
