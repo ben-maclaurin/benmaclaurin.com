@@ -1,7 +1,7 @@
 ---
 title: "Improving Vim Form"
 date: 2022-10-20T21:39:40+01:00
-draft: true
+draft: false
 ---
 
 ## Introduction
