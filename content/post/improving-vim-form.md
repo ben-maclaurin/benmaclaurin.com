@@ -43,7 +43,7 @@ This remaps `v` and `<S-v>` to the escape key in [normal mode](https://learnbyex
 
 ## Closing note
 
-After a few months of [Neovim](https://neovim.io/), I've recently dived back into the world of JetBrain editors. I love the fact that you can combine the ingenuity of a 30-year-old [modal editor](https://en.wikipedia.org/wiki/Vim_(text_editor) with the fully-featured and professional [JetBrains suite](https://www.jetbrains.com/). I will likely write a follow up with my thoughts on this, as it is worthy of its own post.
+After a few months of [Neovim](https://neovim.io/), I've recently dived back into the world of JetBrain editors. I love the fact that you can combine the ingenuity of a 30-year-old [modal editor](https://en.wikipedia.org/wiki/Vim_(text_editor)) with the fully-featured and professional [JetBrains suite](https://www.jetbrains.com/). I will likely write a follow up with my thoughts on this, as it is worthy of its own post.
 
 
 
