@@ -20,7 +20,7 @@ fn convert_to_colemak() {
 }
 ```
 
-A few weeks ago I would approach this by hitting `<C-v>` to enter visual mode, then `jjjj` (one `j` per line which is equivalent to pressing `↓` four times), followed by `y` to "yank" the selection. This _works_, but you could see how the same operation would quickly become arduous for longer blocks. There is, of course, a way to do this in and in half the number of keystrokes. Provided you start at the top of the code block, `y4j` will yield the same result. It is essentially verbatim for:
+A few weeks ago I would approach this by hitting `<C-v>` to enter visual mode, then `jjjj` (one `j` per line which is equivalent to pressing `↓` four times), followed by `y` to "yank" the selection. This _works_, but you could see how the same operation would quickly become arduous for longer blocks. There is, of course, a better way to do this and in half the number of keystrokes. Provided you start at the top of the code block, `y4j` will yield the same result. It is essentially verbatim for:
 
 > repeat the _yank_ operation (`y`), `4x` or `4` lines downwards (`j`). 
 
