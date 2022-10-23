@@ -35,11 +35,11 @@ I will never be able to explain this as well as Jim Dennis, so you should visit 
 If, like me, you have a tendency to form the occasional bad habit, I highly recommend applying a temporary measure to your `.vimrc` or `init.lua`:
 
 ```
-nnoremap v <Esc>
-nnoremap <S-v> <Esc>
+nnoremap v <nop>
+nnoremap <S-v> <nop>
 ```
 
-This remaps `v` and `<S-v>` to the escape key in [normal mode](https://learnbyexample.github.io/vim_reference/Normal-mode.html), which effectively disables them. Whilst uncomfortable at first, this helped reset my muscle memory for both actions and reduced dependence on visual select. If you are feeling particular adventurous (or nonchalant), you could try replicating the above for `j` and `k` to train in [line jumping](https://vim.fandom.com/wiki/Go_to_line) and [other efficient](https://github.com/ggandor/leap.nvim) navigation methods.
+This disables `v` and `<S-v>` to in [normal mode](https://learnbyexample.github.io/vim_reference/Normal-mode.html). Whilst uncomfortable at first, this helped retrain my muscle memory for both actions. If you are feeling particularly adventurous (or nonchalant), you could try replicating the above for `j` and `k` to train in [line jumping](https://vim.fandom.com/wiki/Go_to_line) and [other efficient](https://github.com/ggandor/leap.nvim) navigation methods.
 
 ## Closing note
 
