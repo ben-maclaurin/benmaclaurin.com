@@ -98,13 +98,28 @@ Change the cursor type to bar, as I prefer it in non-modal editors.
 ** Packages
 External packages which I have installed and customised.
 
+*** avy
+avy allows you to jump around text. When a single char is entered, avy highlights candidates.
+
+~C-;~ is bound to ~avy-goto-line~ to enable a shortcut for this functionality:
+
+#+begin_src lisp
+  (global-set-key (kbd "C-;") 'avy-goto-char)
+#+end_src
+
+A convenient key binding for line jumping in avy...
+
+#+begin_src lisp
+  (global-set-key (kbd "M-g f") 'avy-goto-line)
+#+end_src
+
 *** magit
 The [[https://magit.vc/][magit]] package is an interface for Git inside Emacs. I use it for all Git-related operations.
 
 I have bound ~C-x m~ to ~magit-status~ for quicker access to Magit:
 
 #+begin_src lisp
-  (global-set-key (kbd "C-x m") 'magit-status)
+(global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
 
 *** eglot
