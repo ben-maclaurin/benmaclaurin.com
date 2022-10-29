@@ -83,6 +83,33 @@ Change the cursor type to bar, as I prefer it in non-modal editors.
 External packages which I have installed and customised.
 
 
+### evil {#evil}
+
+Enable evil mode, which provides Vim keybinding support for Emacs:
+
+```lisp
+(require 'evil)
+(evil-mode 1)
+```
+
+This line maps `C-u` to `PageUp` in evil mode:
+
+```nil
+(setq evil-want-C-u-scroll t)
+```
+
+
+### key-chord {#key-chord}
+
+I use the key-chord package to remap `jk` key presses in quick succession to escape:
+
+```lisp
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+(key-chord-mode 1)
+```
+
+
 ### avy {#avy}
 
 avy allows you to jump around text. When a single char is entered, avy highlights candidates.
@@ -91,6 +118,12 @@ avy allows you to jump around text. When a single char is entered, avy highlight
 
 ```lisp
 (global-set-key (kbd "C-;") 'avy-goto-char)
+```
+
+A convenient key binding for line jumping in avy...
+
+```lisp
+(global-set-key (kbd "M-g f") 'avy-goto-line)
 ```
 
 
