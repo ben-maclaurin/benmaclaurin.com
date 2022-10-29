@@ -30,7 +30,7 @@ These lines initialise the package archives.
 ```
 
 
-### UI modifications {#ui-modifications}
+### Interface {#interface}
 
 The following lines make several modifications to the default Emacs interface. These are designed to make the display less cluttered with more room for the buffer.
 

@@ -14,6 +14,7 @@ This page documents the contents of my init.el file and associated packages for 
 
 ** Vanilla mods
 This section documents the modifications I have made to the vanilla GNU Emacs distribution.
+
 *** Archives
 These lines initialise the package archives.
 
@@ -40,8 +41,24 @@ The following lines make several modifications to the default Emacs interface. T
 (menu-bar-mode -1)
 #+end_src
 
+*** Typeface
+This line sets the editor font size and face. I use [[https://gitlab.com/protesilaos/iosevka-comfy][Iosevka Comfy]] by Protesilaos Stavrou.
+
+#+begin_src lisp
+  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+#+end_src
+
+*** Meta key
+The following line remaps the Emacs meta ~M~ modifier to the slightly more erognomic macOS command key.
+
+#+begin_src lisp
+  (setq mac-command-modifier 'meta)
+#+end_src
+
 
 ** Packages
+External packages which I have installed and customised.
+
 *** magit
 The [[https://magit.vc/][magit]] package is an interface for Git inside Emacs. I use it for all Git-related operations.
 
@@ -67,20 +84,6 @@ I use the accessible ~ef-themes~ collection by [[https://protesilaos.com/][Prote
 
 #+begin_src lisp
   (load-theme 'ef-summer)
-#+end_src
-
-*** 'meta
-The following line remaps the Emacs meta ~M~ modifier to the slightly more erognomic macOS command key.
-
-#+begin_src lisp
-  (setq mac-command-modifier 'meta)
-#+end_src
-
-*** set-face-attribute
-This line sets the editor font size and face. I use [[https://gitlab.com/protesilaos/iosevka-comfy][Iosevka Comfy]] by Protesilaos Stavrou.
-
-#+begin_src lisp
-  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
 #+end_src
 
 *** ox-hugo
