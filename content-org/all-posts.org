@@ -49,12 +49,19 @@ This line sets the editor font size and face. I use [[https://gitlab.com/protesi
 #+end_src
 
 *** Meta key
+
 The following line remaps the Emacs meta ~M~ modifier to the slightly more erognomic macOS command key.
 
 #+begin_src lisp
   (setq mac-command-modifier 'meta)
 #+end_src
 
+*** Quickly open Emacs config
+This line opens the ~emacs.d~ directory with ~C-x .~
+
+#+begin_src lisp
+  (global-set-key "\C-x." (lambda () (interactive) (dired "~/.emacs.d/")))
+#+end_src
 
 ** Packages
 External packages which I have installed and customised.
