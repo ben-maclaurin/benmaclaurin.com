@@ -42,6 +42,6 @@ Here is a screenshot of step 3:
 
 In the example screenshot I would press `d` as this is the character that corresponds to the termination point.
 
-So, in _approximately_ the same number of actions we achieved the equivalent behaviour without having to count character occurences.
+So, in _approximately_ the same number of actions we achieved comparable behaviour without the additional cognitive load of having to count character occurences.
 
 Before I switched to Emacs, I tried to set this up with [leap](https://github.com/ggandor/leap.nvim) in Neovim but couldn't get it to work properly.
