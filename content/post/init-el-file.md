@@ -65,7 +65,16 @@ The following line remaps the Emacs meta `M` modifier to the slightly more erogn
 This line opens the `emacs.d` directory with `C-x .`
 
 ```lisp
-(global-set-key "\C-x." (lambda () (interactive) (dired "~/.emacs.d/")))
+(global-set-key (kbd "C-x .") (lambda () (interactive) (dired "~/.emacs.d/")))
+```
+
+
+### Cursor type {#cursor-type}
+
+Change the cursor type to bar, as I prefer it in non-modal editors.
+
+```lisp
+(setq-default cursor-type 'bar)
 ```
 
 
@@ -81,7 +90,7 @@ The [magit](https://magit.vc/) package is an interface for Git inside Emacs. I u
 I have bound `C-x m` to `magit-status` for quicker access to Magit:
 
 ```lisp
-(global-set-key "\C-xm" 'magit-status)
+(global-set-key (kbd "C-x m") 'magit-status)
 ```
 
 

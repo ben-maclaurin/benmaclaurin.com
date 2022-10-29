@@ -3,6 +3,30 @@
 #+hugo_base_dir: ../
 #+options: author:nil
 
+* Rust: Trait Objects and the Newtype Pattern
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: post
+:EXPORT_FILE_NAME: rust-trait-objects-and-newtype-pattern
+:END:
+
+** Introduction
+I built a simple Hacker News wrapper in Rust to learn about API design principles. Along the way I also discovered the [[https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html][Newtype pattern]] which provides type safety and encapsulation. The following post is a summary of learnings:
+
+I set a small challenge of building a wrapper around the Hacker News API. To keep the project simple and focus on the goal of studying idiomatic Rust, I only aggregated the top stories (i.e. frontpage matter) and ignored all other site categories (polls, jobs, etc.).
+
+** Understanding the data structure
+- Stories can have /many/ children
+- Comments can have /many/ children
+- Comments can have /only one/ parent
+
+Both sotries and comments are "items". You may be able to spot a simple rule here:
+
+- Stories are /always/ parents. Comments can be either parents /or/ children.
+
+** Defining the item type
+First, I defined the item type. 
+
+
 * DONE Emacs configuration
 CLOSED: [2022-10-29 Sat 18:07]
 :PROPERTIES:
@@ -57,10 +81,18 @@ The following line remaps the Emacs meta ~M~ modifier to the slightly more erogn
 #+end_src
 
 *** Quickly open Emacs config
+
 This line opens the ~emacs.d~ directory with ~C-x .~
 
 #+begin_src lisp
-  (global-set-key "\C-x." (lambda () (interactive) (dired "~/.emacs.d/")))
+  (global-set-key (kbd "C-x .") (lambda () (interactive) (dired "~/.emacs.d/")))
+#+end_src
+
+*** Cursor type
+Change the cursor type to bar, as I prefer it in non-modal editors.
+
+#+begin_src lisp
+  (setq-default cursor-type 'bar)
 #+end_src
 
 ** Packages
@@ -72,7 +104,7 @@ The [[https://magit.vc/][magit]] package is an interface for Git inside Emacs. I
 I have bound ~C-x m~ to ~magit-status~ for quicker access to Magit:
 
 #+begin_src lisp
-  (global-set-key "\C-xm" 'magit-status)
+  (global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
 
 *** eglot
