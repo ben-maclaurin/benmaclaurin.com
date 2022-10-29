@@ -3,6 +3,53 @@
 #+hugo_base_dir: ../
 #+options: author:nil
 
+* DONE Fast motions with avy and evil
+CLOSED: [2022-10-30 Sun 00:49]
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: post
+:EXPORT_FILE_NAME: fast-motions-with-avy-and-evil 
+:END:
+
+I have discovered a beautifully versatile motion technique via avy with evil mode. Both packages are admirable in their own right. avy brings [[https://github.com/abo-abo/avy][char-based decision tree jumping]] to the buffer, and evil is [[https://github.com/emacs-evil/evil][an extensible vi layer]] for Emacs. Combining them, however, feels /magic/. 
+
+** How it works
+Below is some elisp from my init file:
+
+#+begin_src lisp 
+(global-set-key (kbd "C-x .") (lambda () (interactive) (dired "~/.emacs.d/")))
+#+end_src
+
+What if I want to delete from the beginning of the line to the end of ~(interactive)~? 
+
+Maybe ~df)~? No. That would give me:
+
+#+begin_src lisp 
+ (lambda () (interactive) (dired "~/.emacs.d/")))
+#+end_src
+
+Instead, I could count the occurences of ~)~ up until the termination point (there are 3 in this case). ~d3f)~ would give me want I want:
+
+#+begin_src lisp
+ (dired "~/.emacs.d/")))
+#+end_src
+
+With avy, this becomes delightfully simple. We no longer need to count the occurences of a character. Instead, the following key combination will work:
+
+1. ~d~ for delete
+2. ~C-;~ which is my custom keybinding for ~avy-goto-char~
+3. ~<char>~ where ~<char>~ is the target char
+4. ~<avy char>~ which is the character in the visual decision tree which represents our target
+
+Here is a screenshot of step 3:
+
+[[file:avy-demo.png]]
+
+In the example screenshot I would press ~d~ as this is the character that corresponds to the termination point.
+
+So, in /approximately/ the same number of actions we achieved the equivalent behaviour without having to count character occurences.
+
+Before I switched to Emacs, I tried to set this up with [[https://github.com/ggandor/leap.nvim][leap]] in Neovim but couldn't get it to work properly.
+
 * Rust: Trait Objects and the Newtype Pattern
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: post
@@ -25,6 +72,7 @@ Both sotries and comments are "items". You may be able to spot a simple rule her
 
 ** Defining the item type
 First, I defined the item type. 
+
 
 
 * DONE Emacs configuration
