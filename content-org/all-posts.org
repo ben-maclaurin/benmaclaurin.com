@@ -50,12 +50,8 @@ So, in /approximately/ the same number of actions we achieved comparable behavio
 
 Before I switched to Emacs, I tried to set this up with [[https://github.com/ggandor/leap.nvim][leap]] in Neovim but couldn't get it to work properly.
 
-* Rust: Trait Objects and the Newtype Pattern
-:PROPERTIES:
-:EXPORT_HUGO_SECTION: post
-:EXPORT_FILE_NAME: rust-trait-objects-and-newtype-pattern
-:END:
 
+* Rust: Trait Objects and the Newtype Pattern
 ** Introduction
 I built a simple Hacker News wrapper in Rust to learn about API design principles. Along the way I also discovered the [[https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html][Newtype pattern]] which provides type safety and encapsulation. The following post is a summary of learnings:
 
