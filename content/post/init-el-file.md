@@ -60,6 +60,15 @@ The following line remaps the Emacs meta `M` modifier to the slightly more erogn
 ```
 
 
+### Quickly open Emacs config {#quickly-open-emacs-config}
+
+This line opens the `emacs.d` directory with `C-x .`
+
+```lisp
+(global-set-key "\C-x." (lambda () (interactive) (dired "~/.emacs.d/")))
+```
+
+
 ## Packages {#packages}
 
 External packages which I have installed and customised.
@@ -68,6 +77,12 @@ External packages which I have installed and customised.
 ### magit {#magit}
 
 The [magit](https://magit.vc/) package is an interface for Git inside Emacs. I use it for all Git-related operations.
+
+I have bound `C-x m` to `magit-status` for quicker access to Magit:
+
+```lisp
+(global-set-key "\C-xm" 'magit-status)
+```
 
 
 ### eglot {#eglot}

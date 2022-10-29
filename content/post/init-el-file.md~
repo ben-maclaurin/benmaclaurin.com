@@ -42,7 +42,27 @@ The following lines make several modifications to the default Emacs interface. T
 ```
 
 
+### Typeface {#typeface}
+
+This line sets the editor font size and face. I use [Iosevka Comfy](https://gitlab.com/protesilaos/iosevka-comfy) by Protesilaos Stavrou.
+
+```lisp
+(set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+```
+
+
+### Meta key {#meta-key}
+
+The following line remaps the Emacs meta `M` modifier to the slightly more erognomic macOS command key.
+
+```lisp
+(setq mac-command-modifier 'meta)
+```
+
+
 ## Packages {#packages}
+
+External packages which I have installed and customised.
 
 
 ### magit {#magit}
@@ -79,24 +99,6 @@ I use the accessible `ef-themes` collection by [Protesilaos Stavrou](https://pro
 
 ```lisp
 (load-theme 'ef-summer)
-```
-
-
-### 'meta {#meta}
-
-The following line remaps the Emacs meta `M` modifier to the slightly more erognomic macOS command key.
-
-```lisp
-(setq mac-command-modifier 'meta)
-```
-
-
-### set-face-attribute {#set-face-attribute}
-
-This line sets the editor font size and face. I use [Iosevka Comfy](https://gitlab.com/protesilaos/iosevka-comfy) by Protesilaos Stavrou.
-
-```lisp
-(set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
 ```
 
 
