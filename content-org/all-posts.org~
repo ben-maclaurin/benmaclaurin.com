@@ -1,0 +1,73 @@
+#+startup: indent
+#+startup: logdone
+#+hugo_base_dir: ../
+#+options: author:nil
+
+* DONE Emacs configuration
+CLOSED: [2022-10-29 Sat 18:07]
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: post
+:EXPORT_FILE_NAME: init-el-file
+:END:
+
+** Emacs configuration
+This page documents the contents of my init.el file for [[https://www.gnu.org/software/emacs/][GNU Emacs]].
+
+*** Archives
+These lines initialise the package archives.
+
+#+begin_src lisp
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+ (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+   (package-install 'use-package))
+#+end_src
+
+*** tree-sitter-mode
+Enables ~tree-sitter-mode~ globally. Treesitter is an incremental parsing library. 
+
+#+begin_src lisp
+  (global-tree-sitter-mode)
+#+end_src
+
+*** rust-mode
+Instantiates a major mode for the [[https://www.rust-lang.org/][Rust programming language]]. 
+
+#+begin_src lisp
+  (require 'rust-mode)
+#+end_src
+
+*** ef-themes
+I use the accessible ~ef-themes~ collection by [[https://protesilaos.com/][Protesilaos Stavrou]]. 
+
+#+begin_src lisp
+  (load-theme 'ef-summer)
+#+end_src
+
+*** 'meta
+The following line remaps the Emacs meta <M> modifier to the slightly more erognomic macOS command key.
+
+#+begin_src lisp
+  (setq mac-command-modifier 'meta)
+#+end_src
+
+*** set-face-attribute
+This line sets the editor font size and face. I use [[https://gitlab.com/protesilaos/iosevka-comfy][Iosevka Comfy]] by Protesilaos Stavrou.
+
+#+begin_src lisp
+  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+#+end_src
+
+*** ox-hugo
+~ox-hugo~ provides a convenient way to export `.org` files to Hugo-compatible markdown. It is used in the generation of [[https://ben-maclaurin.github.io/][my personal blog]].
+
+#+begin_src lisp
+  (with-eval-after-load 'ox
+  (require 'ox-hugo))
+#+end_src

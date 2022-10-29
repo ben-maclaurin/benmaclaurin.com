@@ -40,12 +40,12 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   url = "/post/"
 [[menu.main]]
   name = "Tags"
-  weight = 30
+  weight = 40
   identifier = "tags"
   url = "/tags/"
 [[menu.main]]
   name = "Categories"
-  weight = 40
+  weight = 50
   identifier = "categories"
   url = "/categories/"
 
@@ -191,6 +191,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 [markup]
   [markup.tableOfContents]
     startLevel = 1
+    endLevel = 4
   [markup.goldmark.renderer]
     unsafe = true
 
@@ -211,3 +212,6 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 #  section = ["HTML", "RSS"]
 #  taxonomy = ["HTML", "RSS"]
 #  taxonomyTerm = ["HTML"]
+
+
+

@@ -54,3 +54,6 @@ At the time of writing, only [one (unofficial) app](https://apps.apple.com/gb/ap
 
 Both target and destination devices need to be connected to Syncthing and Tailscale for synchronisation to work. Fortunately for me, I have a spare Raspberry Pi that runs on my home network. This acts as an intermediary, allowing for resyncs between devices at anytime.
 
+## Update 28/10/2022
+
+I have since switched from Obsidian to GNU Emacs and org-mode.
