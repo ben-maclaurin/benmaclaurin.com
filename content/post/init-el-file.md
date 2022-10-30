@@ -105,6 +105,12 @@ Remap `C-j` and `C-k` to `PageUp` and `PageDn` respectively (via evil):
 (global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
 ```
 
+I use evil exclusively for text editing. For any other arbitrary buffer I use the default Emacs keybindings. To quickly toggle between the modes I use `C-z`:
+
+```lisp
+(global-set-key (kbd "C-z" (lambda () (interactive) (evil-mode))))
+```
+
 
 ### key-chord {#key-chord}
 

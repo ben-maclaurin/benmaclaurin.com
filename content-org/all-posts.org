@@ -55,6 +55,7 @@ Before I switched to Emacs, I tried to set this up with [[https://github.com/gga
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/FiLgoZgaqYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 #+end_export
 
+
 * Rust: Trait Objects and the Newtype Pattern
 ** Introduction
 I built a simple Hacker News wrapper in Rust to learn about API design principles. Along the way I also discovered the [[https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html][Newtype pattern]] which provides type safety and encapsulation. The following post is a summary of learnings:
@@ -165,6 +166,12 @@ Remap ~C-j~ and ~C-k~ to ~PageUp~ and ~PageDn~ respectively (via evil):
 #+begin_src lisp
 (global-set-key (kbd "C-j") (lambda () (interactive) (evil-scroll-down 0)))
 (global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
+#+end_src
+
+I use evil exclusively for text editing. For any other arbitrary buffer I use the default Emacs keybindings. To quickly toggle between the modes I use ~C-z~:
+
+#+begin_src lisp
+(global-set-key (kbd "C-z" (lambda () (interactive) (evil-mode))))
 #+end_src
 
 *** key-chord
