@@ -130,7 +130,7 @@ avy allows you to jump around text. When a single char is entered, avy highlight
 A convenient key binding for line jumping in avy...
 
 ```lisp
-(global-set-key (kbd "M-g f") 'avy-goto-line)
+(global-set-key (kbd "C-'") 'avy-goto-line)
 ```
 
 

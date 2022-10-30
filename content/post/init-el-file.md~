@@ -98,13 +98,20 @@ This line maps `C-u` to `PageUp` in evil mode:
 (setq evil-want-C-u-scroll t)
 ```
 
+Remap `C-j` and `C-k` to `PageUp` and `PageDn` respectively (via evil):
+
+```lisp
+(global-set-key (kbd "C-j") (lambda () (interactive) (evil-scroll-down 0)))
+(global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
+```
+
 
 ### key-chord {#key-chord}
 
 I use the key-chord package to remap `jk` key presses in quick succession to escape:
 
 ```lisp
-(setq key-chord-two-keys-delay 0.5)
+(setq key-chord-two-keys-delay 0.3)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 (key-chord-mode 1)
 ```
