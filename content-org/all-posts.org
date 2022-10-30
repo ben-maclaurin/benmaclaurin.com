@@ -50,6 +50,10 @@ So, in /approximately/ the same number of actions we achieved comparable behavio
 
 Before I switched to Emacs, I tried to set this up with [[https://github.com/ggandor/leap.nvim][leap]] in Neovim but couldn't get it to work properly.
 
+** Watch the video
+#+begin_export html
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/FiLgoZgaqYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+#+end_export
 
 * Rust: Trait Objects and the Newtype Pattern
 ** Introduction

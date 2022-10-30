@@ -45,3 +45,8 @@ In the example screenshot I would press `d` as this is the character that corres
 So, in _approximately_ the same number of actions we achieved comparable behaviour without the additional cognitive load of having to count character occurences.
 
 Before I switched to Emacs, I tried to set this up with [leap](https://github.com/ggandor/leap.nvim) in Neovim but couldn't get it to work properly.
+
+
+## Watch the video {#watch-the-video}
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/FiLgoZgaqYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
