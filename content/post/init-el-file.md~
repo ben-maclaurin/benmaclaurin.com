@@ -4,6 +4,35 @@ date = 2022-10-29T18:07:00+01:00
 draft = false
 +++
 
+<div class="ox-hugo-toc toc">
+
+<div class="heading">Table of Contents</div>
+
+- [Core](#core)
+    - [Archives](#archives)
+    - [Interface](#interface)
+    - [Typeface](#typeface)
+    - [Meta key](#meta-key)
+    - [Quickly open Emacs config](#quickly-open-emacs-config)
+    - [Cursor type](#cursor-type)
+    - [org](#org)
+- [Packages](#packages)
+    - [elfeed](#elfeed)
+    - [evil](#evil)
+    - [key-chord](#key-chord)
+    - [ivy](#ivy)
+    - [avy](#avy)
+    - [magit](#magit)
+    - [eglot](#eglot)
+    - [tree-sitter-mode](#tree-sitter-mode)
+    - [rust-mode](#rust-mode)
+    - [ef-themes](#ef-themes)
+    - [ox-hugo](#ox-hugo)
+    - [linum-relative](#linum-relative)
+
+</div>
+<!--endtoc-->
+
 This page documents the contents of my init.el file and associated packages for [GNU Emacs](https://www.gnu.org/software/emacs/).
 
 

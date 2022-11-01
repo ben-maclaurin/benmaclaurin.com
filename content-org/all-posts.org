@@ -158,6 +158,14 @@ I have specified the following templates:
          "* TODO %?\n  %i\n  %a")))
 #+end_src
 
+*** M- mnemonics
+I have extended the ~(next-line)~ and ~(previous-line)~ mnemonics (~C-n~/~C-p~) as ~M-n~ and ~M-p~ which jump eight lines (plus or minus depending on direction):
+
+#+begin_src lisp
+  (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
+  (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
+#+end_src
+
 ** Packages
 External packages which I have installed and customised.
 

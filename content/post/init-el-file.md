@@ -16,6 +16,7 @@ draft = false
     - [Quickly open Emacs config](#quickly-open-emacs-config)
     - [Cursor type](#cursor-type)
     - [org](#org)
+    - [M- mnemonics](#m-mnemonics)
 - [Packages](#packages)
     - [elfeed](#elfeed)
     - [evil](#evil)
@@ -117,6 +118,16 @@ I have specified the following templates:
 (setq org-capture-templates
     '(("t" "Subin Task" entry (file+headline "~/Developer/subinlaw.com/subin.org" "Tasks")
        "* TODO %?\n  %i\n  %a")))
+```
+
+
+### M- mnemonics {#m-mnemonics}
+
+I have extended the `(next-line)` and `(previous-line)` mnemonics (`C-n~/~C-p`) as `M-n` and `M-p` which jump eight lines (plus or minus depending on direction):
+
+```lisp
+(global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
+(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
 ```
 
 
