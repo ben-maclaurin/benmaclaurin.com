@@ -7,6 +7,7 @@
 CLOSED: [2022-10-30 Sun 00:49]
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: post
+:EXPORT_OPTIONS: toc:2
 :EXPORT_FILE_NAME: fast-motions-with-avy-and-evil 
 :END:
 
@@ -81,27 +82,28 @@ CLOSED: [2022-10-29 Sat 18:07]
 :PROPERTIES:
 :EXPORT_HUGO_SECTION: post
 :EXPORT_FILE_NAME: init-el-file
+:EXPORT_OPTIONS: toc:2
 :END:
 
 This page documents the contents of my init.el file and associated packages for [[https://www.gnu.org/software/emacs/][GNU Emacs]].
 
-** Vanilla mods
-This section documents the modifications I have made to the vanilla GNU Emacs distribution.
+** Core
+This section documents the modifications I have made to the core GNU Emacs distribution.
 
 *** Archives
 These lines initialise the package archives.
 
 #+begin_src lisp
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(package-initialize)
-(unless package-archive-contents
- (package-refresh-contents))
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
+  (unless (package-installed-p 'use-package)
+     (package-install 'use-package))
 #+end_src
 
 *** Interface
@@ -138,77 +140,102 @@ This line opens the ~emacs.d~ directory with ~C-x .~
 #+end_src
 
 *** Cursor type
+
 Change the cursor type to bar, as I prefer it in non-modal editors.
 
 #+begin_src lisp
   (setq-default cursor-type 'bar)
 #+end_src
 
+*** org
+org-capture is a helpful utility which allows me to quickly collate thoughts, ideas or tasks in their context.
+
+I have specified the following templates:
+
+#+begin_src lisp
+  (setq org-capture-templates
+      '(("t" "Subin Task" entry (file+headline "~/Developer/subinlaw.com/subin.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")))
+#+end_src
+
 ** Packages
 External packages which I have installed and customised.
+
+*** elfeed
+[[https://github.com/skeeto/elfeed][elfeed]] is a package I use to serve RSS feeds I am subscribed to. The following lines define the subscription list.
+
+#+begin_src lisp
+  (setq elfeed-feeds
+        '("https://ben-maclaurin.github.io/index.xml"
+          "https://ciechanow.ski/atom.xml"
+          "https://fasterthanli.me/index.xml"
+          "https://hnrss.org/frontpage"))
+#+end_src
+
+~C-x w~ has been established as a keybinding to launch elfeed:
 
 *** evil
 Enable evil mode, which provides Vim keybinding support for Emacs:
 
 #+begin_src lisp
-(require 'evil)
-(evil-mode 1)
+  (require 'evil)
+  (evil-mode 1)
 #+end_src
 
 This line maps ~C-u~ to ~PageUp~ in evil mode:
 
-#+begin_src
-(setq evil-want-C-u-scroll t)
+#+begin_src lisp
+  (setq evil-want-C-u-scroll t)
 #+end_src
 
 Remap ~C-j~ and ~C-k~ to ~PageUp~ and ~PageDn~ respectively (via evil):
 
 #+begin_src lisp
-(global-set-key (kbd "C-j") (lambda () (interactive) (evil-scroll-down 0)))
-(global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
+  (global-set-key (kbd "C-j") (lambda () (interactive) (evil-scroll-down 0)))
+  (global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
 #+end_src
 
 I use evil exclusively for text editing. For any other arbitrary buffer I use the default Emacs keybindings. To quickly toggle between the modes I use ~C-z~:
 
 #+begin_src lisp
-(global-set-key (kbd "C-z" (lambda () (interactive) (evil-mode))))
+  (global-set-key (kbd "C-z" (lambda () (interactive) (evil-mode))))
 #+end_src
 
 *** key-chord
 I use the key-chord package to remap ~jk~ key presses in quick succession to escape:
 
 #+begin_src lisp
-(setq key-chord-two-keys-delay 0.3)
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-(key-chord-mode 1)
+  (setq key-chord-two-keys-delay 0.3)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-mode 1)
 #+end_src
-
+ 
 *** ivy
 Ivy is an advance and extensive completion mechanism. Out of the box it provides helpful completions for commands, dired, swiper, buffers and more...
 
 #+begin_src lisp
-(ivy-mode)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-;; enable this if you want `swiper' to use it
-;; (setq search-default-mode #'char-fold-to-regexp)
-(global-set-key "\C-s" 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "<f6>") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c k") 'counsel-ag)
-(global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+  (ivy-mode)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  ;; enable this if you want `swiper' to use it
+  ;; (setq search-default-mode #'char-fold-to-regexp)
+  (global-set-key "\C-s" 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "<f6>") 'ivy-resume)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+  (global-set-key (kbd "<f1> l") 'counsel-find-library)
+  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c k") 'counsel-ag)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 #+end_src
 *** avy
 avy allows you to jump around text. When a single char is entered, avy highlights candidates.
@@ -231,7 +258,7 @@ The [[https://magit.vc/][magit]] package is an interface for Git inside Emacs. I
 I have bound ~C-x m~ to ~magit-status~ for quicker access to Magit:
 
 #+begin_src lisp
-(global-set-key (kbd "C-x m") 'magit-status)
+  (global-set-key (kbd "C-x m") 'magit-status)
 #+end_src
 
 *** eglot
@@ -248,7 +275,7 @@ Enables ~tree-sitter-mode~ globally. Treesitter is an incremental parsing librar
 Instantiates a major mode for the [[https://www.rust-lang.org/][Rust programming language]]. 
 
 #+begin_src lisp
-  (require 'rust-mode)
+  n(require 'rust-mode)
 #+end_src
 
 *** ef-themes
@@ -270,6 +297,6 @@ I use the accessible ~ef-themes~ collection by [[https://protesilaos.com/][Prote
 This package provides relative line numbers globally and plays well with evil.
 
 #+begin_src lisp
-(require 'linum-relative)
-(linum-on)
+  (require 'linum-relative)
+  (linum-on)
 #+end_src

@@ -7,9 +7,9 @@ draft = false
 This page documents the contents of my init.el file and associated packages for [GNU Emacs](https://www.gnu.org/software/emacs/).
 
 
-## Vanilla mods {#vanilla-mods}
+## Core {#core}
 
-This section documents the modifications I have made to the vanilla GNU Emacs distribution.
+This section documents the modifications I have made to the core GNU Emacs distribution.
 
 
 ### Archives {#archives}
@@ -23,7 +23,7 @@ These lines initialise the package archives.
 
 (package-initialize)
 (unless package-archive-contents
- (package-refresh-contents))
+  (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
    (package-install 'use-package))
@@ -78,9 +78,37 @@ Change the cursor type to bar, as I prefer it in non-modal editors.
 ```
 
 
+### org {#org}
+
+org-capture is a helpful utility which allows me to quickly collate thoughts, ideas or tasks in their context.
+
+I have specified the following templates:
+
+```lisp
+(setq org-capture-templates
+    '(("t" "Subin Task" entry (file+headline "~/Developer/subinlaw.com/subin.org" "Tasks")
+       "* TODO %?\n  %i\n  %a")))
+```
+
+
 ## Packages {#packages}
 
 External packages which I have installed and customised.
+
+
+### elfeed {#elfeed}
+
+[elfeed](https://github.com/skeeto/elfeed) is a package I use to serve RSS feeds I am subscribed to. The following lines define the subscription list.
+
+```lisp
+(setq elfeed-feeds
+      '("https://ben-maclaurin.github.io/index.xml"
+	"https://ciechanow.ski/atom.xml"
+	"https://fasterthanli.me/index.xml"
+	"https://hnrss.org/frontpage"))
+```
+
+`C-x w` has been established as a keybinding to launch elfeed:
 
 
 ### evil {#evil}
@@ -94,7 +122,7 @@ Enable evil mode, which provides Vim keybinding support for Emacs:
 
 This line maps `C-u` to `PageUp` in evil mode:
 
-```nil
+```lisp
 (setq evil-want-C-u-scroll t)
 ```
 
@@ -120,6 +148,36 @@ I use the key-chord package to remap `jk` key presses in quick succession to esc
 (setq key-chord-two-keys-delay 0.3)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 (key-chord-mode 1)
+```
+
+
+### ivy {#ivy}
+
+Ivy is an advance and extensive completion mechanism. Out of the box it provides helpful completions for commands, dired, swiper, buffers and more...
+
+```lisp
+(ivy-mode)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+;; enable this if you want `swiper' to use it
+;; (setq search-default-mode #'char-fold-to-regexp)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f1> f") 'counsel-describe-function)
+(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+(global-set-key (kbd "<f1> l") 'counsel-find-library)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c k") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 ```
 
 
@@ -170,7 +228,7 @@ Enables `tree-sitter-mode` globally. Treesitter is an incremental parsing librar
 Instantiates a major mode for the [Rust programming language](https://www.rust-lang.org/).
 
 ```lisp
-(require 'rust-mode)
+n(require 'rust-mode)
 ```
 
 
@@ -190,4 +248,14 @@ I use the accessible `ef-themes` collection by [Protesilaos Stavrou](https://pro
 ```lisp
 (with-eval-after-load 'ox
 (require 'ox-hugo))
+```
+
+
+### linum-relative {#linum-relative}
+
+This package provides relative line numbers globally and plays well with evil.
+
+```lisp
+(require 'linum-relative)
+(linum-on)
 ```

@@ -4,12 +4,41 @@ date = 2022-10-29T18:07:00+01:00
 draft = false
 +++
 
+<div class="ox-hugo-toc toc">
+
+<div class="heading">Table of Contents</div>
+
+- [Core](#core)
+    - [Archives](#archives)
+    - [Interface](#interface)
+    - [Typeface](#typeface)
+    - [Meta key](#meta-key)
+    - [Quickly open Emacs config](#quickly-open-emacs-config)
+    - [Cursor type](#cursor-type)
+    - [org](#org)
+- [Packages](#packages)
+    - [elfeed](#elfeed)
+    - [evil](#evil)
+    - [key-chord](#key-chord)
+    - [ivy](#ivy)
+    - [avy](#avy)
+    - [magit](#magit)
+    - [eglot](#eglot)
+    - [tree-sitter-mode](#tree-sitter-mode)
+    - [rust-mode](#rust-mode)
+    - [ef-themes](#ef-themes)
+    - [ox-hugo](#ox-hugo)
+    - [linum-relative](#linum-relative)
+
+</div>
+<!--endtoc-->
+
 This page documents the contents of my init.el file and associated packages for [GNU Emacs](https://www.gnu.org/software/emacs/).
 
 
-## Vanilla mods {#vanilla-mods}
+## Core {#core}
 
-This section documents the modifications I have made to the vanilla GNU Emacs distribution.
+This section documents the modifications I have made to the core GNU Emacs distribution.
 
 
 ### Archives {#archives}
@@ -23,7 +52,7 @@ These lines initialise the package archives.
 
 (package-initialize)
 (unless package-archive-contents
- (package-refresh-contents))
+  (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
    (package-install 'use-package))
@@ -78,9 +107,37 @@ Change the cursor type to bar, as I prefer it in non-modal editors.
 ```
 
 
+### org {#org}
+
+org-capture is a helpful utility which allows me to quickly collate thoughts, ideas or tasks in their context.
+
+I have specified the following templates:
+
+```lisp
+(setq org-capture-templates
+    '(("t" "Subin Task" entry (file+headline "~/Developer/subinlaw.com/subin.org" "Tasks")
+       "* TODO %?\n  %i\n  %a")))
+```
+
+
 ## Packages {#packages}
 
 External packages which I have installed and customised.
+
+
+### elfeed {#elfeed}
+
+[elfeed](https://github.com/skeeto/elfeed) is a package I use to serve RSS feeds I am subscribed to. The following lines define the subscription list.
+
+```lisp
+(setq elfeed-feeds
+      '("https://ben-maclaurin.github.io/index.xml"
+	"https://ciechanow.ski/atom.xml"
+	"https://fasterthanli.me/index.xml"
+	"https://hnrss.org/frontpage"))
+```
+
+`C-x w` has been established as a keybinding to launch elfeed:
 
 
 ### evil {#evil}
@@ -94,7 +151,7 @@ Enable evil mode, which provides Vim keybinding support for Emacs:
 
 This line maps `C-u` to `PageUp` in evil mode:
 
-```nil
+```lisp
 (setq evil-want-C-u-scroll t)
 ```
 
@@ -200,7 +257,7 @@ Enables `tree-sitter-mode` globally. Treesitter is an incremental parsing librar
 Instantiates a major mode for the [Rust programming language](https://www.rust-lang.org/).
 
 ```lisp
-(require 'rust-mode)
+n(require 'rust-mode)
 ```
 
 
