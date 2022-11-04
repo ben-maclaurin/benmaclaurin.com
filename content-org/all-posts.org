@@ -3,6 +3,252 @@
 #+hugo_base_dir: ../
 #+options: author:nil
 
+* DONE Emacs config
+CLOSED: [2022-11-04 Fri 20:20]
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: post
+:EXPORT_OPTIONS: toc:2
+:EXPORT_FILE_NAME: emacs-configuration
+:END:
+
+This is a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] page, documenting my GNU Emacs
+configuration. ~org-babel-tangle~ is used to output the resulting
+~init.el~ file.
+
+** Setup Processes
+Tasks and operations that are required for the rest of the expressions
+to run.
+
+*** Archives
+The following lines initialise the package archives.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (require 'package)
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+  #+end_sr
+*** use-package
+Less verbose package definitions and management...
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+
+  (use-package command-log-mode)
+#+end_src
+
+** Core Modifications
+A series of QOL changes I have made to the default distribution.
+
+*** Display
+Reduce clutter and noise in the default Emacs GUI (e.g. hides scroll
+bar and menu bar).
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (setq inhibit-startup-message t)
+  (scroll-bar-mode -1)	 
+  (tool-bar-mode -1)	 
+  (menu-bar-mode -1)	 
+#+end_src
+
+*** Meta key
+Remap the Emacs meta (M) modifier to the macOS command key for
+improved ergonomics and comfort.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (setq mac-command-modifier 'meta)
+#+end_src
+
+*** Font
+Set the default font size and face. I use Prot Stavrou's Iosevka Comfy.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+#+end_src
+
+*** Open this file
+Keybinding to enable swift modification of this file.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
+#+end_src
+
+*** Org
+A set of configurations extending the [[https://orgmode.org/][org major mode]].
+
+**** org-capture-templates
+~org-capture~ is a helpful utility which enables the quick collation
+of thoughts/ideas/tasks (and their contexts).
+
+I have specified the following templates and keybindings:
+
+
+
+**** org-agenda
+Keybinding for org-agenda mode:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
+#+end_src
+
+*** Movement mnemonics
+Two motion mnemonics inspired by ~C-n~ and ~C-p~ which jump eight
+lines (plus or minus depending on direction):
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
+  (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
+#+end_src
+
+*** Visual line mode
+Keybinding to toggle visual-line-mode for buffer wrapping:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
+#+end_src
+
+** Packages
+External packages I have installed.
+
+*** tree-sitter
+An incremental tree parsing package that provides syntax
+highlighting. The lines below install ~tree-sitter~ and enable the
+mode globally.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-tree-sitter-mode)
+#+end_src
+
+*** rust-mode
+Major mode support for the Rust programming language.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package rust-mode
+      :config
+    (require 'rust-mode))
+#+end_src
+
+*** ef-themes
+A beautiful and accessible collection of themes by Prot Stavrou.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package ef-themes
+      :config
+    (load-theme 'ef-frost))
+#+end_src
+
+*** ox-hugo
+~ox-hugo~ provides org export support for Hugo-compatible markdown (it
+powers this blog).
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package ox-hugo
+      :config
+    (with-eval-after-load 'ox
+      (require 'ox-hugo)))
+#+end_src
+
+*** magit
+~magit~ is an interface for Git. ~C-x m~ is bound to ~magit-status~
+for ease-of-access:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package magit
+      :config
+    (global-set-key (kbd "C-x m") 'magit-status))
+#+end_src
+
+*** avy
+This package uses char-based decision trees for optimal buffer
+navigation. ~C-;~ is bound to ~avy-goto-line~:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package avy
+      :config
+    (global-set-key (kbd "C-;") 'avy-goto-char))
+#+end_src
+
+*** ivy
+An advanced completion mechanism. Includes helpful prompts for
+commands, dired, swiper and more...
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package counsel)
+
+  (use-package ivy
+      :config
+    (ivy-mode)
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    ;; enable this if you want `swiper' to use it
+    ;; (setq search-default-mode #'char-fold-to-regexp)
+    (global-set-key "\C-s" 'swiper)
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+    (global-set-key (kbd "<f6>") 'ivy-resume)
+    (global-set-key (kbd "M-x") 'counsel-M-x)
+    (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+    (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+    (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+    (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
+    (global-set-key (kbd "<f1> l") 'counsel-find-library)
+    (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+    (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+    (global-set-key (kbd "C-c g") 'counsel-git)
+    (global-set-key (kbd "C-c j") 'counsel-git-grep)
+    (global-set-key (kbd "C-c k") 'counsel-ag)
+    (global-set-key (kbd "C-x l") 'counsel-locate)
+    (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+    (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+#+end_src
+
+*** elfeed
+Serves RSS feeds. The following lines define my subscription list:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package elfeed
+      :config
+    (setq elfeed-feeds
+          '("https://ben-maclaurin.github.io/index.xml"
+            "https://ciechanow.ski/atom.xml"
+            "https://fasterthanli.me/index.xml"
+            "https://hnrss.org/frontpage")))
+#+end_src
+
+~C-x w~ launches elfeed:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-x w") 'elfeed)
+#+end_src
+
+*** embark
+Enables a set of quick access commands around the point:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package embark
+      :config
+    (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+#+end_src
+
+*** which-key
+A minor mode that provides prompts and tips around an incomplete key
+sequence:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package which-key
+      :config
+    (require 'which-key)
+    (which-key-mode))
+#+end_src
+
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
 :PROPERTIES:
@@ -11,7 +257,10 @@ CLOSED: [2022-10-30 Sun 00:49]
 :EXPORT_FILE_NAME: fast-motions-with-avy-and-evil 
 :END:
 
-I have discovered a beautifully versatile motion technique via avy with evil mode. Both packages are admirable in their own right. avy brings [[https://github.com/abo-abo/avy][char-based decision tree jumping]] to the buffer, and evil is [[https://github.com/emacs-evil/evil][an extensible vi layer]] for Emacs. Combining them, however, feels /magic/. 
+I have discovered a beautifully versatile motion technique via avy
+with evil mode. Both packages are admirable in their own right. avy
+brings [[https://github.com/abo-abo/avy][char-based decision tree jumping]] to the buffer, and evil is [[https://github.com/emacs-evil/evil][an
+extensible vi layer]] for Emacs. Combining them, however, feels /magic/.
 
 ** How it works
 Below is some elisp from my init file:
@@ -20,7 +269,8 @@ Below is some elisp from my init file:
 (global-set-key (kbd "C-x .") (lambda () (interactive) (dired "~/.emacs.d/")))
 #+end_src
 
-What if I want to delete from the beginning of the line to the end of ~(interactive)~? 
+What if I want to delete from the beginning of the line to the end of
+~(interactive)~?
 
 Maybe ~df)~? No. That would give me:
 
@@ -28,28 +278,36 @@ Maybe ~df)~? No. That would give me:
  (lambda () (interactive) (dired "~/.emacs.d/")))
 #+end_src
 
-Instead, I could count the occurences of ~)~ up until the termination point (there are 3 in this case). ~d3f)~ would give me want I want:
+Instead, I could count the occurences of ~)~ up until the termination
+point (there are 3 in this case). ~d3f)~ would give me want I want:
 
 #+begin_src lisp
  (dired "~/.emacs.d/")))
 #+end_src
 
-With avy, this becomes delightfully simple. We no longer need to count the occurences of a character. Instead, the following key combination will work:
+With avy, this becomes delightfully simple. We no longer need to count
+the occurences of a character. Instead, the following key combination
+will work:
 
 1. ~d~ for delete
 2. ~C-;~ which is my custom keybinding for ~avy-goto-char~
 3. ~<char>~ where ~<char>~ is the target char
-4. ~<avy char>~ which is the character in the visual decision tree which represents our target
+4. ~<avy char>~ which is the character in the visual decision tree
+   which represents our target
 
 Here is a screenshot of step 3:
 
 [[file:avy-demo.png]]
 
-In the example screenshot I would press ~d~ as this is the character that corresponds to the termination point.
+In the example screenshot I would press ~d~ as this is the character
+that corresponds to the termination point.
 
-So, in /approximately/ the same number of actions we achieved comparable behaviour without the additional cognitive load of having to count character occurences.
+So, in /approximately/ the same number of actions we achieved
+comparable behaviour without the additional cognitive load of having
+to count character occurences.
 
-Before I switched to Emacs, I tried to set this up with [[https://github.com/ggandor/leap.nvim][leap]] in Neovim but couldn't get it to work properly.
+Before I switched to Emacs, I tried to set this up with [[https://github.com/ggandor/leap.nvim][leap]] in Neovim
+but couldn't get it to work properly.
 
 ** Watch the video
 #+begin_export html
@@ -59,16 +317,23 @@ Before I switched to Emacs, I tried to set this up with [[https://github.com/gga
 
 * Rust: Trait Objects and the Newtype Pattern
 ** Introduction
-I built a simple Hacker News wrapper in Rust to learn about API design principles. Along the way I also discovered the [[https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html][Newtype pattern]] which provides type safety and encapsulation. The following post is a summary of learnings:
+I built a simple Hacker News wrapper in Rust to learn about API design
+principles. Along the way I also discovered the [[https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html][Newtype pattern]] which
+provides type safety and encapsulation. The following post is a
+summary of learnings:
 
-I set a small challenge of building a wrapper around the Hacker News API. To keep the project simple and focus on the goal of studying idiomatic Rust, I only aggregated the top stories (i.e. frontpage matter) and ignored all other site categories (polls, jobs, etc.).
+I set a small challenge of building a wrapper around the Hacker News
+API. To keep the project simple and focus on the goal of studying
+idiomatic Rust, I only aggregated the top stories (i.e. frontpage
+matter) and ignored all other site categories (polls, jobs, etc.).
 
 ** Understanding the data structure
 - Stories can have /many/ children
 - Comments can have /many/ children
 - Comments can have /only one/ parent
 
-Both sotries and comments are "items". You may be able to spot a simple rule here:
+Both sotries and comments are "items". You may be able to spot a
+simple rule here:
 
 - Stories are /always/ parents. Comments can be either parents /or/ children.
 
@@ -77,234 +342,4 @@ First, I defined the item type.
 
 
 
-* DONE Emacs configuration
-CLOSED: [2022-10-29 Sat 18:07]
-:PROPERTIES:
-:EXPORT_HUGO_SECTION: post
-:EXPORT_FILE_NAME: init-el-file
-:EXPORT_OPTIONS: toc:2
-:END:
 
-This page documents the contents of my init.el file and associated packages for [[https://www.gnu.org/software/emacs/][GNU Emacs]].
-
-** Core
-This section documents the modifications I have made to the core GNU Emacs distribution.
-
-*** Archives
-These lines initialise the package archives.
-
-#+begin_src lisp
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")
-                           ("elpa" . "https://elpa.gnu.org/packages/")))
-
-  (package-initialize)
-  (unless package-archive-contents
-    (package-refresh-contents))
-
-  (unless (package-installed-p 'use-package)
-     (package-install 'use-package))
-#+end_src
-
-*** Interface
-The following lines make several modifications to the default Emacs interface. These are designed to make the display less cluttered with more room for the buffer.
-
-#+begin_src lisp
-(setq inhibit-startup-message t)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-#+end_src
-
-*** Typeface
-This line sets the editor font size and face. I use [[https://gitlab.com/protesilaos/iosevka-comfy][Iosevka Comfy]] by Protesilaos Stavrou.
-
-#+begin_src lisp
-  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
-#+end_src
-
-*** Meta key
-
-The following line remaps the Emacs meta ~M~ modifier to the slightly more erognomic macOS command key.
-
-#+begin_src lisp
-  (setq mac-command-modifier 'meta)
-#+end_src
-
-*** Quickly open Emacs config
-
-This line opens the ~emacs.d~ directory with ~C-x .~
-
-#+begin_src lisp
-  (global-set-key (kbd "C-x .") (lambda () (interactive) (dired "~/.emacs.d/")))
-#+end_src
-
-*** Cursor type
-
-Change the cursor type to bar, as I prefer it in non-modal editors.
-
-#+begin_src lisp
-  (setq-default cursor-type 'bar)
-#+end_src
-
-*** org
-org-capture is a helpful utility which allows me to quickly collate thoughts, ideas or tasks in their context.
-
-I have specified the following templates:
-
-#+begin_src lisp
-  (setq org-capture-templates
-      '(("t" "Subin Task" entry (file+headline "~/Developer/subinlaw.com/subin.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")))
-#+end_src
-
-*** M- mnemonics
-I have extended the ~(next-line)~ and ~(previous-line)~ mnemonics (~C-n~/~C-p~) as ~M-n~ and ~M-p~ which jump eight lines (plus or minus depending on direction):
-
-#+begin_src lisp
-  (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
-  (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
-#+end_src
-
-** Packages
-External packages which I have installed and customised.
-
-*** elfeed
-[[https://github.com/skeeto/elfeed][elfeed]] is a package I use to serve RSS feeds I am subscribed to. The following lines define the subscription list.
-
-#+begin_src lisp
-  (setq elfeed-feeds
-        '("https://ben-maclaurin.github.io/index.xml"
-          "https://ciechanow.ski/atom.xml"
-          "https://fasterthanli.me/index.xml"
-          "https://hnrss.org/frontpage"))
-#+end_src
-
-~C-x w~ has been established as a keybinding to launch elfeed:
-
-*** evil
-Enable evil mode, which provides Vim keybinding support for Emacs:
-
-#+begin_src lisp
-  (require 'evil)
-  (evil-mode 1)
-#+end_src
-
-This line maps ~C-u~ to ~PageUp~ in evil mode:
-
-#+begin_src lisp
-  (setq evil-want-C-u-scroll t)
-#+end_src
-
-Remap ~C-j~ and ~C-k~ to ~PageUp~ and ~PageDn~ respectively (via evil):
-
-#+begin_src lisp
-  (global-set-key (kbd "C-j") (lambda () (interactive) (evil-scroll-down 0)))
-  (global-set-key (kbd "C-k") (lambda () (interactive) (evil-scroll-up 0)))
-#+end_src
-
-I use evil exclusively for text editing. For any other arbitrary buffer I use the default Emacs keybindings. To quickly toggle between the modes I use ~C-z~:
-
-#+begin_src lisp
-  (global-set-key (kbd "C-z" (lambda () (interactive) (evil-mode))))
-#+end_src
-
-*** key-chord
-I use the key-chord package to remap ~jk~ key presses in quick succession to escape:
-
-#+begin_src lisp
-  (setq key-chord-two-keys-delay 0.3)
-  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
-  (key-chord-mode 1)
-#+end_src
- 
-*** ivy
-Ivy is an advance and extensive completion mechanism. Out of the box it provides helpful completions for commands, dired, swiper, buffers and more...
-
-#+begin_src lisp
-  (ivy-mode)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  ;; enable this if you want `swiper' to use it
-  ;; (setq search-default-mode #'char-fold-to-regexp)
-  (global-set-key "\C-s" 'swiper)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  (global-set-key (kbd "<f6>") 'ivy-resume)
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
-  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-  (global-set-key (kbd "<f1> l") 'counsel-find-library)
-  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c k") 'counsel-ag)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-#+end_src
-*** avy
-avy allows you to jump around text. When a single char is entered, avy highlights candidates.
-
-~C-;~ is bound to ~avy-goto-line~ to enable a shortcut for this functionality:
-
-#+begin_src lisp
-  (global-set-key (kbd "C-;") 'avy-goto-char)
-#+end_src
-
-A convenient key binding for line jumping in avy...
-
-#+begin_src lisp
-  (global-set-key (kbd "C-'") 'avy-goto-line)
-#+end_src
-
-*** magit
-The [[https://magit.vc/][magit]] package is an interface for Git inside Emacs. I use it for all Git-related operations.
-
-I have bound ~C-x m~ to ~magit-status~ for quicker access to Magit:
-
-#+begin_src lisp
-  (global-set-key (kbd "C-x m") 'magit-status)
-#+end_src
-
-*** eglot
-[[https://github.com/joaotavora/eglot][eglot]] is an Emacs client for LSP (Language Server Protocol) servers. When ~M-x eglot~ is executed inside a file, Eglot attempts to find the associated LSP and run it.
-
-*** tree-sitter-mode
-Enables ~tree-sitter-mode~ globally. Treesitter is an incremental parsing library. 
-
-#+begin_src lisp
-  (global-tree-sitter-mode)
-#+end_src
-
-*** rust-mode
-Instantiates a major mode for the [[https://www.rust-lang.org/][Rust programming language]]. 
-
-#+begin_src lisp
-  n(require 'rust-mode)
-#+end_src
-
-*** ef-themes
-I use the accessible ~ef-themes~ collection by [[https://protesilaos.com/][Protesilaos Stavrou]]. 
-
-#+begin_src lisp
-  (load-theme 'ef-summer)
-#+end_src
-
-*** ox-hugo
-~ox-hugo~ provides a convenient way to export Org files to Hugo-compatible markdown. It is used in the generation of [[https://ben-maclaurin.github.io/][my personal blog]].
-
-#+begin_src lisp
-  (with-eval-after-load 'ox
-  (require 'ox-hugo))
-#+end_src
-
-*** linum-relative
-This package provides relative line numbers globally and plays well with evil.
-
-#+begin_src lisp
-  (require 'linum-relative)
-  (linum-on)
-#+end_src
