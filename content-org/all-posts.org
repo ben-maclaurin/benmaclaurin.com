@@ -82,6 +82,13 @@ Keybinding to enable swift modification of this file.
   (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
 #+end_src
 
+Once edits have been made, ~org-babel-tangle~ can be executed with
+~C-c C-v t~, followed by ~C-x r .~ to reload ~init.el~:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
+#+end_src
+
 *** Org
 A set of configurations extending the [[https://orgmode.org/][org major mode]].
 
@@ -265,6 +272,13 @@ Org-based knowledge management system.
                  ("C-c n j" . org-roam-dailies-capture-today))
           :config
           (org-roam-setup))
+#+end_src
+
+*** eglot
+An LSP client... tries to match a locally-installed LSP with the current buffer:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package eglot)
 #+end_src
 
 * DONE Fast motions with avy and evil

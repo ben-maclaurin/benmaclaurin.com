@@ -19,7 +19,6 @@ draft = false
     - [Org](#org)
     - [Movement mnemonics](#movement-mnemonics)
     - [Visual line mode](#visual-line-mode)
-    - [Quit Emacs](#quit-emacs)
 - [Packages](#packages)
     - [tree-sitter](#tree-sitter)
     - [rust-mode](#rust-mode)
@@ -31,6 +30,8 @@ draft = false
     - [elfeed](#elfeed)
     - [embark](#embark)
     - [which-key](#which-key)
+    - [org-roam](#org-roam)
+    - [eglot](#eglot)
 
 </div>
 <!--endtoc-->
@@ -123,6 +124,13 @@ Keybinding to enable swift modification of this file.
 (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
 ```
 
+Once edits have been made, `org-babel-tangle` can be executed with
+`C-c C-v t`, followed by `C-x r .` to reload `init.el`:
+
+```lisp
+(global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
+```
+
 
 ### Org {#org}
 
@@ -131,7 +139,8 @@ A set of configurations extending the [org major mode](https://orgmode.org/).
 
 #### org-capture-templates {#org-capture-templates}
 
-`org-capture` is a helpful utility which enables the quick collation of thoughts/ideas/tasks (and their contexts).
+`org-capture` is a helpful utility which enables the quick collation
+of thoughts/ideas/tasks (and their contexts).
 
 I have specified the following templates and keybindings:
 
@@ -147,7 +156,8 @@ Keybinding for org-agenda mode:
 
 ### Movement mnemonics {#movement-mnemonics}
 
-Two motion mnemonics inspired by `C-n` and `C-p` which jump eight lines (plus or minus depending on direction):
+Two motion mnemonics inspired by `C-n` and `C-p` which jump eight
+lines (plus or minus depending on direction):
 
 ```lisp
 (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
@@ -161,15 +171,6 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
 
 ```lisp
 (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
-```
-
-
-### Quit Emacs {#quit-emacs}
-
-Quit Emacs in macOS style:
-
-```lisp
-(global-set-key (kbd "M-q") (lambda () (interactive) (save-buffers-kill-emacs)))
 ```
 
 
@@ -213,7 +214,8 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 
 ### ox-hugo {#ox-hugo}
 
-`ox-hugo` provides org export support for Hugo-compatible markdown (it powers this blog).
+`ox-hugo` provides org export support for Hugo-compatible markdown (it
+powers this blog).
 
 ```lisp
 (use-package ox-hugo
@@ -225,7 +227,8 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 
 ### magit {#magit}
 
-`magit` is an interface for Git. `C-x m` is bound to `magit-status` for ease-of-access:
+`magit` is an interface for Git. `C-x m` is bound to `magit-status`
+for ease-of-access:
 
 ```lisp
 (use-package magit
@@ -236,7 +239,8 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 
 ### avy {#avy}
 
-This package uses char-based decision trees for optimal buffer navigation. `C-;` is bound to `avy-goto-line`:
+This package uses char-based decision trees for optimal buffer
+navigation. `C-;` is bound to `avy-goto-line`:
 
 ```lisp
 (use-package avy
@@ -247,7 +251,8 @@ This package uses char-based decision trees for optimal buffer navigation. `C-;`
 
 ### ivy {#ivy}
 
-An advanced completion mechanism. Includes helpful prompts for commands, dired, swiper and more...
+An advanced completion mechanism. Includes helpful prompts for
+commands, dired, swiper and more...
 
 ```lisp
 (use-package counsel)
@@ -313,11 +318,41 @@ Enables a set of quick access commands around the point:
 
 ### which-key {#which-key}
 
-A minor mode that provides prompts and tips around an incomplete key sequence:
+A minor mode that provides prompts and tips around an incomplete key
+sequence:
 
 ```lisp
 (use-package which-key
     :config
   (require 'which-key)
   (which-key-mode))
+```
+
+
+### org-roam {#org-roam}
+
+Org-based knowledge management system.
+
+```lisp
+(use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory (file-truename "~/org/roam"))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+	   ("C-c n f" . org-roam-node-find)
+	   ("C-c n g" . org-roam-graph)
+	   ("C-c n i" . org-roam-node-insert)
+	   ("C-c n c" . org-roam-capture)
+	   ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (org-roam-setup))
+```
+
+
+### eglot {#eglot}
+
+An LSP client... tries to match a locally-installed LSP with the current buffer:
+
+```lisp
+(use-package eglot)
 ```

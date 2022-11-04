@@ -16,6 +16,9 @@ draft = false
     - [Meta key](#meta-key)
     - [Font](#font)
     - [Open this file](#open-this-file)
+    - [Org](#org)
+    - [Movement mnemonics](#movement-mnemonics)
+    - [Visual line mode](#visual-line-mode)
 - [Packages](#packages)
     - [tree-sitter](#tree-sitter)
     - [rust-mode](#rust-mode)
@@ -26,6 +29,8 @@ draft = false
     - [ivy](#ivy)
     - [elfeed](#elfeed)
     - [embark](#embark)
+    - [which-key](#which-key)
+    - [org-roam](#org-roam)
 
 </div>
 <!--endtoc-->
@@ -46,6 +51,8 @@ to run.
 The following lines initialise the package archives.
 
 ```lisp
+(require 'package)
+
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
 			 ("org" . "https://orgmode.org/elpa/")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
@@ -64,8 +71,10 @@ Less verbose package definitions and management...
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+
+(use-package command-log-mode)
 ```
 
 
@@ -111,7 +120,49 @@ Set the default font size and face. I use Prot Stavrou's Iosevka Comfy.
 Keybinding to enable swift modification of this file.
 
 ```lisp
-(global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
+(global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
+```
+
+
+### Org {#org}
+
+A set of configurations extending the [org major mode](https://orgmode.org/).
+
+
+#### org-capture-templates {#org-capture-templates}
+
+`org-capture` is a helpful utility which enables the quick collation
+of thoughts/ideas/tasks (and their contexts).
+
+I have specified the following templates and keybindings:
+
+
+#### org-agenda {#org-agenda}
+
+Keybinding for org-agenda mode:
+
+```lisp
+(global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
+```
+
+
+### Movement mnemonics {#movement-mnemonics}
+
+Two motion mnemonics inspired by `C-n` and `C-p` which jump eight
+lines (plus or minus depending on direction):
+
+```lisp
+(global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
+(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
+```
+
+
+### Visual line mode {#visual-line-mode}
+
+Keybinding to toggle visual-line-mode for buffer wrapping:
+
+```lisp
+(global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 ```
 
 
@@ -127,11 +178,7 @@ highlighting. The lines below install `tree-sitter` and enable the
 mode globally.
 
 ```lisp
-(use-package tree-sitter
-    :config
-  (global-tree-sitter-mode))
-
-(use-package tree-sitter-langs)
+(global-tree-sitter-mode)
 ```
 
 
@@ -159,7 +206,8 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 
 ### ox-hugo {#ox-hugo}
 
-`ox-hugo` provides org export support for Hugo-compatible markdown (it powers this blog).
+`ox-hugo` provides org export support for Hugo-compatible markdown (it
+powers this blog).
 
 ```lisp
 (use-package ox-hugo
@@ -171,18 +219,20 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 
 ### magit {#magit}
 
-`magit` is an interface for Git. `C-x m` is bound to `magit-status` for ease-of-access:
+`magit` is an interface for Git. `C-x m` is bound to `magit-status`
+for ease-of-access:
 
 ```lisp
 (use-package magit
     :config
-  (global-set-key (kbd "C-x m") 'magit-status)))
+  (global-set-key (kbd "C-x m") 'magit-status))
 ```
 
 
 ### avy {#avy}
 
-This package uses char-based decision trees for optimal buffer navigation. `C-;` is bound to `avy-goto-line`:
+This package uses char-based decision trees for optimal buffer
+navigation. `C-;` is bound to `avy-goto-line`:
 
 ```lisp
 (use-package avy
@@ -193,7 +243,8 @@ This package uses char-based decision trees for optimal buffer navigation. `C-;`
 
 ### ivy {#ivy}
 
-An advanced completion mechanism. Includes helpful prompts for commands, dired, swiper and more...
+An advanced completion mechanism. Includes helpful prompts for
+commands, dired, swiper and more...
 
 ```lisp
 (use-package counsel)
@@ -247,3 +298,44 @@ Serves RSS feeds. The following lines define my subscription list:
 
 
 ### embark {#embark}
+
+Enables a set of quick access commands around the point:
+
+```lisp
+(use-package embark
+    :config
+  (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+```
+
+
+### which-key {#which-key}
+
+A minor mode that provides prompts and tips around an incomplete key
+sequence:
+
+```lisp
+(use-package which-key
+    :config
+  (require 'which-key)
+  (which-key-mode))
+```
+
+
+### org-roam {#org-roam}
+
+Org-based knowledge management system.
+
+```lisp
+(use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory (file-truename "~/org/roam"))
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+	   ("C-c n f" . org-roam-node-find)
+	   ("C-c n g" . org-roam-graph)
+	   ("C-c n i" . org-roam-node-insert)
+	   ("C-c n c" . org-roam-capture)
+	   ("C-c n j" . org-roam-dailies-capture-today))
+    :config
+    (org-roam-setup))
+```
