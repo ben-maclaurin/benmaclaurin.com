@@ -31,6 +31,7 @@ draft = false
     - [embark](#embark)
     - [which-key](#which-key)
     - [org-roam](#org-roam)
+    - [eglot](#eglot)
 
 </div>
 <!--endtoc-->
@@ -121,6 +122,13 @@ Keybinding to enable swift modification of this file.
 
 ```lisp
 (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
+```
+
+Once edits have been made, `org-babel-tangle` can be executed with
+`C-c C-v t`, followed by `C-x r .` to reload `init.el`:
+
+```lisp
+(global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
 ```
 
 
@@ -338,4 +346,13 @@ Org-based knowledge management system.
 	   ("C-c n j" . org-roam-dailies-capture-today))
     :config
     (org-roam-setup))
+```
+
+
+### eglot {#eglot}
+
+An LSP client... tries to match a locally-installed LSP with the current buffer:
+
+```lisp
+(use-package eglot)
 ```
