@@ -281,6 +281,16 @@ An LSP client... tries to match a locally-installed LSP with the current buffer:
   (use-package eglot)
 #+end_src
 
+*** org-bullets
+Renders nice bullet point UTF characters to replace org headline stars:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+    (use-package org-bullets
+        :config
+      (require 'org-bullets)
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
 :PROPERTIES:
