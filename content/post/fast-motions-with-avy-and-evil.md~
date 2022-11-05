@@ -4,6 +4,16 @@ date = 2022-10-30T00:49:00+01:00
 draft = false
 +++
 
+<div class="ox-hugo-toc toc">
+
+<div class="heading">Table of Contents</div>
+
+- [How it works](#how-it-works)
+- [Watch the video](#watch-the-video)
+
+</div>
+<!--endtoc-->
+
 I have discovered a beautifully versatile motion technique via avy with evil mode. Both packages are admirable in their own right. avy brings [char-based decision tree jumping](https://github.com/abo-abo/avy) to the buffer, and evil is [an extensible vi layer](https://github.com/emacs-evil/evil) for Emacs. Combining them, however, feels _magic_.
 
 

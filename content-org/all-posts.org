@@ -123,6 +123,13 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
   (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 #+end_src
 
+*** Highlight line mode
+Always enable highlight line mode:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (hl-line-mode)
+#+end_src
+
 ** Packages
 External packages I have installed.
 
