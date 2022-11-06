@@ -69,10 +69,10 @@ improved ergonomics and comfort.
 #+end_src
 
 *** Font
-Set the default font size and face. I use Prot Stavrou's Iosevka Comfy.
+Set the default font size and face. 
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+  (set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
 #+end_src
 
 *** Open this file
@@ -247,9 +247,9 @@ Serves RSS feeds. The following lines define my subscription list:
 Enables a set of quick access commands around the point:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package embark
-      :config
-    (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+  ;; (use-package embark
+  ;;     :config
+  ;;   (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
 #+end_src
 
 *** which-key
@@ -296,6 +296,23 @@ Renders nice bullet point UTF characters to replace org headline stars:
         :config
       (require 'org-bullets)
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+end_src
+
+*** expand-region
+Increase a selection by a set of semantic units.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package expand-region
+      :bind ("C-." . er/expand-region))
+#+end_src
+
+*** company-mode
+A completions helper. Improves on the existing eglot completion mechanism:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package company
+      :config
+    (add-hook 'after-init-hook 'global-company-mode))
 #+end_src
 
 * DONE Fast motions with avy and evil
