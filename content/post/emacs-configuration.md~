@@ -32,6 +32,7 @@ draft = false
     - [which-key](#which-key)
     - [org-roam](#org-roam)
     - [eglot](#eglot)
+    - [org-bullets](#org-bullets)
 
 </div>
 <!--endtoc-->
@@ -355,4 +356,16 @@ An LSP client... tries to match a locally-installed LSP with the current buffer:
 
 ```lisp
 (use-package eglot)
+```
+
+
+### org-bullets {#org-bullets}
+
+Renders nice bullet point UTF characters to replace org headline stars:
+
+```lisp
+(use-package org-bullets
+    :config
+  (require 'org-bullets)
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 ```

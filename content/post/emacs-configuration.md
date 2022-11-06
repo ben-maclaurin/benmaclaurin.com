@@ -19,6 +19,7 @@ draft = false
     - [Org](#org)
     - [Movement mnemonics](#movement-mnemonics)
     - [Visual line mode](#visual-line-mode)
+    - [Highlight line mode](#highlight-line-mode)
 - [Packages](#packages)
     - [tree-sitter](#tree-sitter)
     - [rust-mode](#rust-mode)
@@ -33,6 +34,8 @@ draft = false
     - [org-roam](#org-roam)
     - [eglot](#eglot)
     - [org-bullets](#org-bullets)
+    - [expand-region](#expand-region)
+    - [company-mode](#company-mode)
 
 </div>
 <!--endtoc-->
@@ -110,10 +113,10 @@ improved ergonomics and comfort.
 
 ### Font {#font}
 
-Set the default font size and face. I use Prot Stavrou's Iosevka Comfy.
+Set the default font size and face.
 
 ```lisp
-(set-face-attribute 'default nil :font "Iosevka Comfy" :height 195)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
 ```
 
 
@@ -172,6 +175,15 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
 
 ```lisp
 (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
+```
+
+
+### Highlight line mode {#highlight-line-mode}
+
+Always enable highlight line mode:
+
+```lisp
+(hl-line-mode)
 ```
 
 
@@ -311,9 +323,9 @@ Serves RSS feeds. The following lines define my subscription list:
 Enables a set of quick access commands around the point:
 
 ```lisp
-(use-package embark
-    :config
-  (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+;; (use-package embark
+;;     :config
+;;   (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
 ```
 
 
@@ -368,4 +380,25 @@ Renders nice bullet point UTF characters to replace org headline stars:
     :config
   (require 'org-bullets)
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+```
+
+
+### expand-region {#expand-region}
+
+Increase a selection by a set of semantic units.
+
+```lisp
+(use-package expand-region
+    :bind ("C-." . er/expand-region))
+```
+
+
+### company-mode {#company-mode}
+
+A completions helper. Improves on the existing eglot completion mechanism:
+
+```lisp
+(use-package company
+    :config
+  (add-hook 'after-init-hook 'global-company-mode))
 ```
