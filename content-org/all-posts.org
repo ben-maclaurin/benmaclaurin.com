@@ -33,6 +33,7 @@ The following lines initialise the package archives.
   (unless package-archive-contents
     (package-refresh-contents))
 #+end_src
+
 *** use-package
 Less verbose package definitions and management...
 
@@ -128,6 +129,13 @@ Always enable highlight line mode:
   (hl-line-mode)
 #+end_src
 
+*** Org agenda files location
+Set the location for agenda files:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (setq org-agenda-files '("~/org/task.org"))
+#+end_src
+
 ** Packages
 External packages I have installed.
 
@@ -138,6 +146,7 @@ mode globally.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 #+end_src
 
 *** rust-mode
@@ -155,7 +164,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package ef-themes
       :config
-    (load-theme 'ef-autumn))
+    (load-theme 'ef-night))
 #+end_src
 
 *** ox-hugo
@@ -244,10 +253,10 @@ Serves RSS feeds. The following lines define my subscription list:
 *** embark
 Enables a set of quick access commands around the point:
 
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;; (use-package embark
-  ;;     :config
-  ;;   (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (use-package embark
+      :config
+    (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
 #+end_src
 
 *** which-key
@@ -289,7 +298,7 @@ An LSP client... tries to match a locally-installed LSP with the current buffer:
 *** org-bullets
 Renders nice bullet point UTF characters to replace org headline stars:
 
-#+begin_src lisp :tangle ~/.emacs.d/init.el
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
     (use-package org-bullets
         :config
       (require 'org-bullets)
@@ -339,7 +348,7 @@ Switch to normal mode by pressing ~j~ and ~k~ in quick succession.
 *** meow
 A modal editor.
 
-#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+#+begin_src lisp :tangle ~/.emacs.d/init.el
   (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-overwrite-define-key
@@ -427,10 +436,12 @@ A modal editor.
    '("<escape>" . ignore)))
 #+end_src
 
-#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
-  (require 'meow)
-  (meow-setup)
-  (meow-global-mode 1)
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package meow
+      :config
+    (require 'meow)
+    (meow-setup)
+    (meow-global-mode 1))
 #+end_src
 
 * DONE Fast motions with avy and evil
