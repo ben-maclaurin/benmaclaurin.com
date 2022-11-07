@@ -98,8 +98,6 @@ of thoughts/ideas/tasks (and their contexts).
 
 I have specified the following templates and keybindings:
 
-
-
 **** org-agenda
 Keybinding for org-agenda mode:
 
@@ -157,7 +155,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package ef-themes
       :config
-    (load-theme 'ef-frost))
+    (load-theme 'ef-autumn))
 #+end_src
 
 *** ox-hugo
@@ -303,7 +301,7 @@ Increase a selection by a set of semantic units.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package expand-region
-      :bind ("C-." . er/expand-region))
+      :bind ("C-." . 'er/expand-region))
 #+end_src
 
 *** company-mode
@@ -313,6 +311,126 @@ A completions helper. Improves on the existing eglot completion mechanism:
   (use-package company
       :config
     (add-hook 'after-init-hook 'global-company-mode))
+#+end_src
+
+*** evil-mode
+Vim emulation for Emacs.
+
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (unless (package-installed-p 'evil)
+    (package-install 'evil))
+  (setq evil-want-C-u-scroll t) 
+  (require 'evil)
+  (define-key evil-normal-state-map (kbd "C-.") nil)
+  (evil-mode 1)
+#+end_src
+
+*** key-chord
+Switch to normal mode by pressing ~j~ and ~k~ in quick succession.
+
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (use-package key-chord
+      :config
+    (setq key-chord-two-keys-delay 0.3)
+    (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+    (key-chord-mode 1))
+#+end_src
+
+*** meow
+A modal editor.
+
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (defun meow-setup ()
+  (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
+  (meow-motion-overwrite-define-key
+   '("j" . meow-next)
+   '("k" . meow-prev)
+   '("<escape>" . ignore))
+  (meow-leader-define-key
+   ;; SPC j/k will run the original command in MOTION state.
+   '("j" . "H-j")
+   '("k" . "H-k")
+   ;; Use SPC (0-9) for digit arguments.
+   '("1" . meow-digit-argument)
+   '("2" . meow-digit-argument)
+   '("3" . meow-digit-argument)
+   '("4" . meow-digit-argument)
+   '("5" . meow-digit-argument)
+   '("6" . meow-digit-argument)
+   '("7" . meow-digit-argument)
+   '("8" . meow-digit-argument)
+   '("9" . meow-digit-argument)
+   '("0" . meow-digit-argument)
+   '("/" . meow-keypad-describe-key)
+   '("?" . meow-cheatsheet))
+  (meow-normal-define-key
+   '("0" . meow-expand-0)
+   '("9" . meow-expand-9)
+   '("8" . meow-expand-8)
+   '("7" . meow-expand-7)
+   '("6" . meow-expand-6)
+   '("5" . meow-expand-5)
+   '("4" . meow-expand-4)
+   '("3" . meow-expand-3)
+   '("2" . meow-expand-2)
+   '("1" . meow-expand-1)
+   '("-" . negative-argument)
+   '(";" . meow-reverse)
+   '("," . meow-inner-of-thing)
+   '("." . meow-bounds-of-thing)
+   '("[" . meow-beginning-of-thing)
+   '("]" . meow-end-of-thing)
+   '("a" . meow-append)
+   '("A" . meow-open-below)
+   '("b" . meow-back-word)
+   '("B" . meow-back-symbol)
+   '("c" . meow-change)
+   '("d" . meow-delete)
+   '("D" . meow-backward-delete)
+   '("e" . meow-next-word)
+   '("E" . meow-next-symbol)
+   '("f" . meow-find)
+   '("g" . meow-cancel-selection)
+   '("G" . meow-grab)
+   '("h" . meow-left)
+   '("H" . meow-left-expand)
+   '("i" . meow-insert)
+   '("I" . meow-open-above)
+   '("j" . meow-next)
+   '("J" . meow-next-expand)
+   '("k" . meow-prev)
+   '("K" . meow-prev-expand)
+   '("l" . meow-right)
+   '("L" . meow-right-expand)
+   '("m" . meow-join)
+   '("n" . meow-search)
+   '("o" . meow-block)
+   '("O" . meow-to-block)
+   '("p" . meow-yank)
+   '("q" . meow-quit)
+   '("Q" . meow-goto-line)
+   '("r" . meow-replace)
+   '("R" . meow-swap-grab)
+   '("s" . meow-kill)
+   '("t" . meow-till)
+   '("u" . meow-undo)
+   '("U" . meow-undo-in-selection)
+   '("v" . meow-visit)
+   '("w" . meow-mark-word)
+   '("W" . meow-mark-symbol)
+   '("x" . meow-line)
+   '("X" . meow-goto-line)
+   '("y" . meow-save)
+   '("Y" . meow-sync-grab)
+   '("z" . meow-pop-selection)
+   '("'" . repeat)
+   '("<escape>" . ignore)))
+#+end_src
+
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (require 'meow)
+  (meow-setup)
+  (meow-global-mode 1)
 #+end_src
 
 * DONE Fast motions with avy and evil
