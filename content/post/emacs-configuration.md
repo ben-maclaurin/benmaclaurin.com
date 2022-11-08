@@ -20,6 +20,7 @@ draft = false
     - [Movement mnemonics](#movement-mnemonics)
     - [Visual line mode](#visual-line-mode)
     - [Highlight line mode](#highlight-line-mode)
+    - [Org agenda files location](#org-agenda-files-location)
 - [Packages](#packages)
     - [tree-sitter](#tree-sitter)
     - [rust-mode](#rust-mode)
@@ -190,6 +191,15 @@ Always enable highlight line mode:
 ```
 
 
+### Org agenda files location {#org-agenda-files-location}
+
+Set the location for agenda files:
+
+```lisp
+(setq org-agenda-files '("~/org/task.org"))
+```
+
+
 ## Packages {#packages}
 
 External packages I have installed.
@@ -203,6 +213,7 @@ mode globally.
 
 ```lisp
 (global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ```
 
 
@@ -224,7 +235,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 ```lisp
 (use-package ef-themes
     :config
-  (load-theme 'ef-autumn))
+  (load-theme 'ef-night))
 ```
 
 
@@ -326,9 +337,9 @@ Serves RSS feeds. The following lines define my subscription list:
 Enables a set of quick access commands around the point:
 
 ```lisp
-;; (use-package embark
-;;     :config
-;;   (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
+(use-package embark
+    :config
+  (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
 ```
 
 
@@ -527,7 +538,9 @@ A modal editor.
 ```
 
 ```lisp
-(require 'meow)
-(meow-setup)
-(meow-global-mode 1)
+(use-package meow
+    :config
+  (require 'meow)
+  (meow-setup)
+  (meow-global-mode 1))
 ```
