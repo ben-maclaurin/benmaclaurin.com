@@ -40,6 +40,9 @@ draft = false
     - [evil-mode](#evil-mode)
     - [key-chord](#key-chord)
     - [meow](#meow)
+    - [typescript-mode](#typescript-mode)
+    - [aphelia](#aphelia)
+    - [vterm](#vterm)
 
 </div>
 <!--endtoc-->
@@ -514,8 +517,10 @@ A modal editor.
  '("L" . meow-right-expand)
  '("m" . meow-join)
  '("n" . meow-search)
- '("o" . meow-block)
- '("O" . meow-to-block)
+ ;;'("o" . meow-block)
+ '("o" . meow-open-below)
+ '("O" . meow-open-above)
+ ;;'("O" . meow-to-block)
  '("p" . meow-yank)
  '("q" . meow-quit)
  '("Q" . meow-goto-line)
@@ -543,4 +548,49 @@ A modal editor.
   (require 'meow)
   (meow-setup)
   (meow-global-mode 1))
+```
+
+
+### typescript-mode {#typescript-mode}
+
+Adds Typescript support to Emacs.
+
+```lisp
+(use-package typescript-mode
+    :after tree-sitter
+    :config
+    ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
+    ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
+    (define-derived-mode typescriptreact-mode typescript-mode
+      "TypeScript TSX")
+
+    ;; use our derived mode for tsx files
+    (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
+    ;; by default, typescript-mode is mapped to the treesitter typescript parser
+    ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
+    (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
+```
+
+
+### aphelia {#aphelia}
+
+Auto formatting for TS documents.
+
+```lisp
+;; auto-format different source code files extremely intelligently
+;; https://github.com/radian-software/apheleia
+(use-package apheleia
+    :ensure t
+    :config
+    (apheleia-global-mode +1))
+```
+
+
+### vterm {#vterm}
+
+Better terminal emulation:
+
+```lisp
+(use-package vterm
+    :ensure t)
 ```

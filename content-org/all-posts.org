@@ -447,6 +447,8 @@ A modal editor.
 #+end_src
 
 *** typescript-mode
+Adds Typescript support to Emacs.
+
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package typescript-mode
       :after tree-sitter
@@ -465,6 +467,7 @@ A modal editor.
 #+end_src
 
 *** aphelia
+Auto formatting for TS documents.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;; auto-format different source code files extremely intelligently
@@ -474,6 +477,14 @@ A modal editor.
       :config
       (apheleia-global-mode +1))
 
+#+end_src
+
+*** vterm
+Better terminal emulation:
+
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (use-package vterm
+      :ensure t)
 #+end_src
 
 * DONE Fast motions with avy and evil
