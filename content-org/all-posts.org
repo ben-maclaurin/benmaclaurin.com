@@ -11,7 +11,7 @@ CLOSED: [2022-11-04 Fri 20:20]
 :EXPORT_FILE_NAME: emacs-configuration
 :END:
 
-This is a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] page, documenting my GNU Emacs
+This is a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] page, documenting my GNU 'Emacs
 configuration. ~org-babel-tangle~ is used to output the resulting
 ~init.el~ file.
 
@@ -73,7 +73,7 @@ improved ergonomics and comfort.
 Set the default font size and face. 
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
+  (set-face-attribute 'default nil :font "JetBrains Mono" :height 170)
 #+end_src
 
 *** Open this file
@@ -164,7 +164,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package ef-themes
       :config
-    (load-theme 'ef-night))
+    (load-theme 'ef-light))
 #+end_src
 
 *** ox-hugo
@@ -189,13 +189,14 @@ for ease-of-access:
 #+end_src
 
 *** avy
+
 This package uses char-based decision trees for optimal buffer
 navigation. ~C-;~ is bound to ~avy-goto-line~:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package avy
       :config
-    (global-set-key (kbd "C-;") 'avy-goto-char))
+    (global-set-key (kbd "C-;") 'avy-goto-line))
 #+end_src
 
 *** ivy
@@ -396,8 +397,8 @@ A modal editor.
    '("c" . meow-change)
    '("d" . meow-delete)
    '("D" . meow-backward-delete)
-   '("e" . meow-next-word)
-   '("E" . meow-next-symbol)
+   '("w" . meow-next-word)
+   '("W" . meow-next-symbol)
    '("f" . meow-find)
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
@@ -413,10 +414,8 @@ A modal editor.
    '("L" . meow-right-expand)
    '("m" . meow-join)
    '("n" . meow-search)
-   ;;'("o" . meow-block)
    '("o" . meow-open-below)
    '("O" . meow-open-above)
-   ;;'("O" . meow-to-block)
    '("p" . meow-yank)
    '("q" . meow-quit)
    '("Q" . meow-goto-line)
@@ -427,8 +426,8 @@ A modal editor.
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)
    '("v" . meow-visit)
-   '("w" . meow-mark-word)
-   '("W" . meow-mark-symbol)
+   '("e" . meow-mark-word)
+   '("E" . meow-mark-symbol)
    '("x" . meow-line)
    '("X" . meow-goto-line)
    '("y" . meow-save)
@@ -437,6 +436,9 @@ A modal editor.
    '("'" . repeat)
    '("<escape>" . ignore)))
 #+end_src
+
+I have swapped ~w~ and ~e~. I have also mapped ~O~ and ~o~ to new line above and below respectively. This is so I don't
+completely lose my Vim muscle memory.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package meow
@@ -480,11 +482,17 @@ Auto formatting for TS documents.
 #+end_src
 
 *** vterm
+
 Better terminal emulation:
 
 #+begin_src lisp :tangle ~/.emacs.d/init-bin.el
   (use-package vterm
       :ensure t)
+#+end_src
+
+*** doom-themes
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (use-package doom-themes)
 #+end_src
 
 * DONE Fast motions with avy and evil
