@@ -122,18 +122,18 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
   (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 #+end_src
 
-*** Highlight line mode
-Always enable highlight line mode:
-
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  (hl-line-mode)
-#+end_src
-
 *** Org agenda files location
 Set the location for agenda files:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (setq org-agenda-files '("~/org/task.org"))
+#+end_src
+
+*** Line numbers
+Enable relative line numbers in editors.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-display-line-numbers-mode)
 #+end_src
 
 ** Packages
@@ -191,19 +191,19 @@ for ease-of-access:
 *** avy
 
 This package uses char-based decision trees for optimal buffer
-navigation. ~C-;~ is bound to ~avy-goto-line~:
+navigation. ~C-;~ is bound to ~avy-goto-char~:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package avy
       :config
-    (global-set-key (kbd "C-;") 'avy-goto-line))
+    (global-set-key (kbd "C-;") 'avy-goto-char))
 #+end_src
 
 *** ivy
 An advanced completion mechanism. Includes helpful prompts for
 commands, dired, swiper and more...
 
-#+begin_src lisp :tangle ~/.emacs.d/init.el
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
   (use-package counsel)
 
   (use-package ivy
@@ -232,23 +232,93 @@ commands, dired, swiper and more...
     (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 #+end_src
 
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  (global-set-key (kbd "C-q") 'counsel-git-grep)
+#+end_src
+
+*** swiper
+Better search:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package swiper)
+  (global-set-key "\C-s" 'swiper)
+#+end_src
+
+*** vertico
+Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+    (use-package vertico
+        :init
+      (vertico-mode)
+      (setq vertico-count 20))
+  
+    ;; Configure directory extension.
+    (use-package vertico-directory
+        :after vertico
+        :ensure nil
+        ;; More convenient directory navigation commands
+        :bind (:map vertico-map
+                    ("RET" . vertico-directory-enter)
+                    ("DEL" . vertico-directory-delete-char)
+                    ("M-DEL" . vertico-directory-delete-word))
+        ;; Tidy shadowed file names
+        :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+#+end_src
+
+*** marginalia
+Provides rich descriptions next to minibuffer completions.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package marginalia
+      :init
+    (marginalia-mode))
+#+end_src
+
+*** counsel
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package counsel)
+#+end_src
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-q") 'counsel-git-grep)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+
+#+end_src
 *** elfeed
 Serves RSS feeds. The following lines define my subscription list:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package elfeed
-      :config
-    (setq elfeed-feeds
-          '("https://ben-maclaurin.github.io/index.xml"
-            "https://ciechanow.ski/atom.xml"
-            "https://fasterthanli.me/index.xml"
-            "https://hnrss.org/frontpage")))
+                            (use-package elfeed
+                                :config
+                              (setq elfeed-feeds
+                                    '("https://ben-maclaurin.github.io/index.xml"
+                                      "https://ciechanow.ski/atom.xml"
+                                      "https://fasterthanli.me/index.xml"
+                                      "https://hnrss.org/frontpage"
+                                      "https://nitter.net/hlissner/rss"
+                                      "https://nitter.net/karpathy/rss"
+                                      "https://nitter.net/aratramba/rss"
+                                      "https://nitter.net/ohhdanm/rss"
+                                      "https://lexfridman.com/feed/podcast/"
+                                      "https://nitter.net/ukutaht/rss"
+                                      "https://nitter.net/chris_mccord/rss"
+                                      "https://nitter.net/josevalim/rss"
+                                      "https://nitter.net/jonhoo/rss"
+                                      "https://nitter.net/rich_harris/rss")))
 #+end_src
 
 ~C-x w~ launches elfeed:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (global-set-key (kbd "C-x w") 'elfeed)
+#+end_src
+
+Keybinding to update the feeds:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "C-x u") 'elfeed-update)
 #+end_src
 
 *** embark
@@ -395,8 +465,8 @@ A modal editor.
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
-   '("d" . meow-delete)
-   '("D" . meow-backward-delete)
+   '("x" . meow-delete)
+   '("X" . meow-backward-delete)
    '("w" . meow-next-word)
    '("W" . meow-next-symbol)
    '("f" . meow-find)
@@ -421,14 +491,14 @@ A modal editor.
    '("Q" . meow-goto-line)
    '("r" . meow-replace)
    '("R" . meow-swap-grab)
-   '("s" . meow-kill)
+   '("d" . meow-kill)
    '("t" . meow-till)
    '("u" . meow-undo)
    '("U" . meow-undo-in-selection)
-   '("v" . meow-visit)
+   '("/" . meow-visit)
    '("e" . meow-mark-word)
    '("E" . meow-mark-symbol)
-   '("x" . meow-line)
+   '("v" . meow-line)
    '("X" . meow-goto-line)
    '("y" . meow-save)
    '("Y" . meow-sync-grab)
@@ -447,6 +517,14 @@ completely lose my Vim muscle memory.
     (meow-setup)
     (meow-global-mode 1))
 #+end_src
+
+Register a new inner bound for <> tags:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (meow-thing-register 'tag '(pair (">") ("<")) '(pair (">") ("<")))
+  (add-to-list 'meow-char-thing-table '(?a . tag))
+#+end_src
+
 
 *** typescript-mode
 Adds Typescript support to Emacs.
@@ -495,6 +573,14 @@ Better terminal emulation:
   (use-package doom-themes)
 #+end_src
 
+*** kaolin-themes
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package kaolin-themes)
+#+end_src
+*** go-mode
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package go-mode)
+#+end_src
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
 :PROPERTIES:
