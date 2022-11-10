@@ -164,7 +164,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package ef-themes
       :config
-    (load-theme 'ef-light))
+    (load-theme 'ef-cherie))
 #+end_src
 
 *** ox-hugo
@@ -196,7 +196,8 @@ navigation. ~C-;~ is bound to ~avy-goto-char~:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package avy
       :config
-    (global-set-key (kbd "C-;") 'avy-goto-char))
+    (global-set-key (kbd "C-;") 'avy-goto-char)
+    (global-set-key (kbd "C-l") 'avy-goto-line))
 #+end_src
 
 *** ivy
@@ -559,24 +560,11 @@ Auto formatting for TS documents.
 
 #+end_src
 
-*** vterm
-
-Better terminal emulation:
-
-#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
-  (use-package vterm
-      :ensure t)
-#+end_src
-
 *** doom-themes
 #+begin_src lisp :tangle ~/.emacs.d/init-bin.el
   (use-package doom-themes)
 #+end_src
 
-*** kaolin-themes
-#+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package kaolin-themes)
-#+end_src
 *** go-mode
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package go-mode)
