@@ -13,7 +13,7 @@ CLOSED: [2022-11-04 Fri 20:20]
 
 This is a [[https://en.wikipedia.org/wiki/Literate_programming][literate programming]] page, documenting my GNU 'Emacs
 configuration. ~org-babel-tangle~ is used to output the resulting
-~init.el~ file.
+~init.el~ file. The source of this file can be viewed [[https://github.com/ben-maclaurin/ben-maclaurin.github.io/blob/main/content-org/all-posts.org#emacs-config][here]].
 
 ** Setup Processes
 Tasks and operations that are required for the rest of the expressions
