@@ -73,7 +73,7 @@ improved ergonomics and comfort.
 Set the default font size and face. 
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (set-face-attribute 'default nil :font "JetBrains Mono" :height 170)
+  (set-face-attribute 'default nil :font "JetBrains Mono" :height 165)
 #+end_src
 
 *** Open this file
@@ -164,7 +164,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package ef-themes
       :config
-    (load-theme 'ef-cherie))
+    (load-theme 'ef-night))
 #+end_src
 
 *** ox-hugo
@@ -516,13 +516,15 @@ completely lose my Vim muscle memory.
       :config
     (require 'meow)
     (meow-setup)
-    (meow-global-mode 1))
+    (meow-global-mode 1)
+    (setq meow-expand-hint-remove-delay 2.0)
+    (meow-setup-indicator))
 #+end_src
 
 Register a new inner bound for <> tags:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (meow-thing-register 'tag '(pair (">") ("<")) '(pair (">") ("<")))
+  (meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
   (add-to-list 'meow-char-thing-table '(?a . tag))
 #+end_src
 
