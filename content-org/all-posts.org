@@ -130,12 +130,19 @@ Set the location for agenda files:
 #+end_src
 
 *** Line numbers
+
 Enable relative line numbers in editors.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (global-display-line-numbers-mode)
 #+end_src
 
+*** Save place
+Persist cursor locations across sessions.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (save-place-mode 1)
+#+end_src
 ** Packages
 External packages I have installed.
 
@@ -568,9 +575,19 @@ Auto formatting for TS documents.
 #+end_src
 
 *** go-mode
+
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package go-mode)
 #+end_src
+
+*** savehist
+Persist minibuffer history across Emacs sessions:
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package savehist
+      :init
+    (savehist-mode))
+#+end_src
+
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
 :PROPERTIES:
