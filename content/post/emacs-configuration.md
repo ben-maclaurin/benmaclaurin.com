@@ -19,8 +19,10 @@ draft = false
     - [Org](#org)
     - [Movement mnemonics](#movement-mnemonics)
     - [Visual line mode](#visual-line-mode)
-    - [Highlight line mode](#highlight-line-mode)
     - [Org agenda files location](#org-agenda-files-location)
+    - [Line numbers](#line-numbers)
+    - [Save place](#save-place)
+    - [Allow hash key entry on macOS](#allow-hash-key-entry-on-macos)
 - [Packages](#packages)
     - [tree-sitter](#tree-sitter)
     - [rust-mode](#rust-mode)
@@ -29,6 +31,10 @@ draft = false
     - [magit](#magit)
     - [avy](#avy)
     - [ivy](#ivy)
+    - [swiper](#swiper)
+    - [vertico](#vertico)
+    - [marginalia](#marginalia)
+    - [counsel](#counsel)
     - [elfeed](#elfeed)
     - [embark](#embark)
     - [which-key](#which-key)
@@ -42,14 +48,18 @@ draft = false
     - [meow](#meow)
     - [typescript-mode](#typescript-mode)
     - [aphelia](#aphelia)
-    - [vterm](#vterm)
+    - [doom-themes](#doom-themes)
+    - [go-mode](#go-mode)
+    - [savehist](#savehist)
+    - [elixir-mode](#elixir-mode)
+    - [elixir-ls](#elixir-ls)
 
 </div>
 <!--endtoc-->
 
-This is a [literate programming](https://en.wikipedia.org/wiki/Literate_programming) page, documenting my GNU Emacs
+This is a [literate programming](https://en.wikipedia.org/wiki/Literate_programming) page, documenting my GNU 'Emacs
 configuration. `org-babel-tangle` is used to output the resulting
-`init.el` file.
+`init.el` file. The source of this file can be viewed [here](https://github.com/ben-maclaurin/ben-maclaurin.github.io/blob/main/content-org/all-posts.org#emacs-config).
 
 
 ## Setup Processes {#setup-processes}
@@ -123,7 +133,7 @@ improved ergonomics and comfort.
 Set the default font size and face.
 
 ```lisp
-(set-face-attribute 'default nil :font "JetBrains Mono" :height 180)
+(set-face-attribute 'default nil :font "Iosevka Comfy" :height 165)
 ```
 
 
@@ -185,21 +195,37 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
 ```
 
 
-### Highlight line mode {#highlight-line-mode}
-
-Always enable highlight line mode:
-
-```lisp
-(hl-line-mode)
-```
-
-
 ### Org agenda files location {#org-agenda-files-location}
 
 Set the location for agenda files:
 
 ```lisp
 (setq org-agenda-files '("~/org/task.org"))
+```
+
+
+### Line numbers {#line-numbers}
+
+Enable relative line numbers in editors.
+
+```lisp
+(global-display-line-numbers-mode)
+```
+
+
+### Save place {#save-place}
+
+Persist cursor locations across sessions.
+
+```lisp
+(save-place-mode 1)
+```
+
+
+### Allow hash key entry on macOS {#allow-hash-key-entry-on-macos}
+
+```lisp
+(global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 ```
 
 
@@ -270,12 +296,13 @@ for ease-of-access:
 ### avy {#avy}
 
 This package uses char-based decision trees for optimal buffer
-navigation. `C-;` is bound to `avy-goto-line`:
+navigation. `C-;` is bound to `avy-goto-char`:
 
 ```lisp
 (use-package avy
     :config
-  (global-set-key (kbd "C-;") 'avy-goto-char))
+  (global-set-key (kbd "C-;") 'avy-goto-char)
+  (global-set-key (kbd "C-l") 'avy-goto-line))
 ```
 
 
@@ -313,6 +340,67 @@ commands, dired, swiper and more...
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 ```
 
+```lisp
+(global-set-key (kbd "C-q") 'counsel-git-grep)
+```
+
+
+### swiper {#swiper}
+
+Better search:
+
+```lisp
+(use-package swiper)
+(global-set-key "\C-s" 'swiper)
+```
+
+
+### vertico {#vertico}
+
+Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
+
+```lisp
+(use-package vertico
+    :init
+  (vertico-mode)
+  (setq vertico-count 20))
+
+;; Configure directory extension.
+(use-package vertico-directory
+    :after vertico
+    :ensure nil
+    ;; More convenient directory navigation commands
+    :bind (:map vertico-map
+		("RET" . vertico-directory-enter)
+		("DEL" . vertico-directory-delete-char)
+		("M-DEL" . vertico-directory-delete-word))
+    ;; Tidy shadowed file names
+    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+```
+
+
+### marginalia {#marginalia}
+
+Provides rich descriptions next to minibuffer completions.
+
+```lisp
+(use-package marginalia
+    :init
+  (marginalia-mode))
+```
+
+
+### counsel {#counsel}
+
+```lisp
+(use-package counsel)
+```
+
+```lisp
+(global-set-key (kbd "C-q") 'counsel-git-grep)
+(global-set-key (kbd "C-c g") 'counsel-git)
+```
+
 
 ### elfeed {#elfeed}
 
@@ -325,13 +413,29 @@ Serves RSS feeds. The following lines define my subscription list:
 	'("https://ben-maclaurin.github.io/index.xml"
 	  "https://ciechanow.ski/atom.xml"
 	  "https://fasterthanli.me/index.xml"
-	  "https://hnrss.org/frontpage")))
+	  "https://hnrss.org/frontpage"
+	  "https://nitter.net/hlissner/rss"
+	  "https://nitter.net/karpathy/rss"
+	  "https://nitter.net/aratramba/rss"
+	  "https://nitter.net/ohhdanm/rss"
+	  "https://lexfridman.com/feed/podcast/"
+	  "https://nitter.net/ukutaht/rss"
+	  "https://nitter.net/chris_mccord/rss"
+	  "https://nitter.net/josevalim/rss"
+	  "https://nitter.net/jonhoo/rss"
+	  "https://nitter.net/rich_harris/rss")))
 ```
 
 `C-x w` launches elfeed:
 
 ```lisp
 (global-set-key (kbd "C-x w") 'elfeed)
+```
+
+Keybinding to update the feeds:
+
+```lisp
+(global-set-key (kbd "C-x u") 'elfeed-update)
 ```
 
 
@@ -498,10 +602,10 @@ A modal editor.
  '("b" . meow-back-word)
  '("B" . meow-back-symbol)
  '("c" . meow-change)
- '("d" . meow-delete)
- '("D" . meow-backward-delete)
- '("e" . meow-next-word)
- '("E" . meow-next-symbol)
+ '("x" . meow-delete)
+ '("X" . meow-backward-delete)
+ '("w" . meow-next-word)
+ '("W" . meow-next-symbol)
  '("f" . meow-find)
  '("g" . meow-cancel-selection)
  '("G" . meow-grab)
@@ -517,23 +621,21 @@ A modal editor.
  '("L" . meow-right-expand)
  '("m" . meow-join)
  '("n" . meow-search)
- ;;'("o" . meow-block)
  '("o" . meow-open-below)
  '("O" . meow-open-above)
- ;;'("O" . meow-to-block)
  '("p" . meow-yank)
  '("q" . meow-quit)
  '("Q" . meow-goto-line)
  '("r" . meow-replace)
  '("R" . meow-swap-grab)
- '("s" . meow-kill)
+ '("d" . meow-kill)
  '("t" . meow-till)
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
- '("v" . meow-visit)
- '("w" . meow-mark-word)
- '("W" . meow-mark-symbol)
- '("x" . meow-line)
+ '("/" . meow-visit)
+ '("e" . meow-mark-word)
+ '("E" . meow-mark-symbol)
+ '("v" . meow-line)
  '("X" . meow-goto-line)
  '("y" . meow-save)
  '("Y" . meow-sync-grab)
@@ -542,12 +644,24 @@ A modal editor.
  '("<escape>" . ignore)))
 ```
 
+I have swapped `w` and `e`. I have also mapped `O` and `o` to new line above and below respectively. This is so I don't
+completely lose my Vim muscle memory.
+
 ```lisp
 (use-package meow
     :config
   (require 'meow)
   (meow-setup)
-  (meow-global-mode 1))
+  (meow-global-mode 1)
+  (setq meow-expand-hint-remove-delay 2.0)
+  (meow-setup-indicator))
+```
+
+Register a new inner bound for &lt;&gt; tags:
+
+```lisp
+(meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
+(add-to-list 'meow-char-thing-table '(?a . tag))
 ```
 
 
@@ -586,11 +700,44 @@ Auto formatting for TS documents.
 ```
 
 
-### vterm {#vterm}
-
-Better terminal emulation:
+### doom-themes {#doom-themes}
 
 ```lisp
-(use-package vterm
-    :ensure t)
+(use-package doom-themes)
+```
+
+
+### go-mode {#go-mode}
+
+```lisp
+(use-package go-mode)
+```
+
+
+### savehist {#savehist}
+
+Persist minibuffer history across Emacs sessions:
+
+```lisp
+(use-package savehist
+    :init
+  (savehist-mode))
+```
+
+
+### elixir-mode {#elixir-mode}
+
+```lisp
+(use-package elixir-mode)
+```
+
+
+### elixir-ls {#elixir-ls}
+
+Setup the Elixir Language Server:
+
+```lisp
+(require 'eglot)
+
+(add-to-list 'eglot-server-programs '(elixir-mode "~/elixir-ls/language_server.sh"))
 ```
