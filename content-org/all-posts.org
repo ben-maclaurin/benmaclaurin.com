@@ -73,7 +73,7 @@ improved ergonomics and comfort.
 Set the default font size and face. 
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (set-face-attribute 'default nil :font "JetBrains Mono" :height 165)
+  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 165)
 #+end_src
 
 *** Open this file
@@ -143,6 +143,11 @@ Persist cursor locations across sessions.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (save-place-mode 1)
 #+end_src
+*** Allow hash key entry on macOS
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+#+end_src
+
 ** Packages
 External packages I have installed.
 
@@ -587,6 +592,21 @@ Persist minibuffer history across Emacs sessions:
       :init
     (savehist-mode))
 #+end_src
+
+*** elixir-mode
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package elixir-mode)
+#+end_src
+
+*** elixir-ls
+Setup the Elixir Language Server:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (require 'eglot)
+
+  (add-to-list 'eglot-server-programs '(elixir-mode "~/elixir-ls/language_server.sh"))
+#+end_src
+
 
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
