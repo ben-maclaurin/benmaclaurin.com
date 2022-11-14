@@ -23,6 +23,9 @@ to run.
 The following lines initialise the package archives.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; archives 
+
   (require 'package)
 
   (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -38,6 +41,9 @@ The following lines initialise the package archives.
 Less verbose package definitions and management...
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; use-package 
+
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
 
@@ -55,6 +61,9 @@ Reduce clutter and noise in the default Emacs GUI (e.g. hides scroll
 bar and menu bar).
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; display
+  
   (setq inhibit-startup-message t)
   (scroll-bar-mode -1)	 
   (tool-bar-mode -1)	 
@@ -66,6 +75,9 @@ Remap the Emacs meta (M) modifier to the macOS command key for
 improved ergonomics and comfort.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; meta key
+  
   (setq mac-command-modifier 'meta)
 #+end_src
 
@@ -73,13 +85,19 @@ improved ergonomics and comfort.
 Set the default font size and face. 
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (set-face-attribute 'default nil :font "Iosevka Comfy" :height 165)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; font
+  
+  (set-face-attribute 'default nil :font "JetBrains Mono" :height 165)
 #+end_src
 
 *** Open this file
 Keybinding to enable swift modification of this file.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; open this file
+  
   (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
 #+end_src
 
@@ -103,6 +121,9 @@ I have specified the following templates and keybindings:
 Keybinding for org-agenda mode:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; org
+  
   (global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
 #+end_src
 
@@ -111,6 +132,9 @@ Two motion mnemonics inspired by ~C-n~ and ~C-p~ which jump eight
 lines (plus or minus depending on direction):
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; movement mnemonics
+  
   (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
   (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
 #+end_src
@@ -119,6 +143,9 @@ lines (plus or minus depending on direction):
 Keybinding to toggle visual-line-mode for buffer wrapping:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; visual line mode
+  
   (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 #+end_src
 
@@ -126,6 +153,9 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
 Set the location for agenda files:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; org agenda files location
+  
   (setq org-agenda-files '("~/org/task.org"))
 #+end_src
 
@@ -246,7 +276,7 @@ commands, dired, swiper and more...
 #+end_src
 
 #+begin_src lisp :tangle ~/.emacs.d/init-bin.el
-  (global-set-key (kbd "C-q") 'counsel-git-grep)
+  (global-set-key (kbd "C-q") 'counsel-git)
 #+end_src
 
 *** swiper
@@ -295,9 +325,10 @@ Provides rich descriptions next to minibuffer completions.
 #+end_src
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (global-set-key (kbd "C-q") 'counsel-git-grep)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-
+  (global-set-key (kbd "C-q") 'counsel-git)
+  (global-set-key (kbd "C-c g") 'counsel-git-grep)
+  (global-set-key (kbd "C-SPC") 'counsel-git)
+  (global-set-key (kbd "M-SPC") 'switch-to-buffer)
 #+end_src
 *** elfeed
 Serves RSS feeds. The following lines define my subscription list:
