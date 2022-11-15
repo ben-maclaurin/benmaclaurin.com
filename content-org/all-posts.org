@@ -88,7 +88,7 @@ Set the default font size and face.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; font
   
-  (set-face-attribute 'default nil :font "JetBrains Mono" :height 165)
+  (set-face-attribute 'default nil :font "Roboto Mono" :height 165)
 #+end_src
 
 *** Open this file
@@ -164,6 +164,9 @@ Set the location for agenda files:
 Enable relative line numbers in editors.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; line numbers
+
   (global-display-line-numbers-mode)
 #+end_src
 
@@ -171,10 +174,18 @@ Enable relative line numbers in editors.
 Persist cursor locations across sessions.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; save place
+
   (save-place-mode 1)
 #+end_src
+
 *** Allow hash key entry on macOS
+
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; allow hash key entry on macOS
+  
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 #+end_src
 
@@ -187,6 +198,9 @@ highlighting. The lines below install ~tree-sitter~ and enable the
 mode globally.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; tree-sitter
+
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 #+end_src
@@ -195,6 +209,9 @@ mode globally.
 Major mode support for the Rust programming language.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; rust-mode
+
   (use-package rust-mode
       :config
     (require 'rust-mode))
@@ -204,9 +221,10 @@ Major mode support for the Rust programming language.
 A beautiful and accessible collection of themes by Prot Stavrou.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (use-package ef-themes
-      :config
-    (load-theme 'ef-night))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; ef-themes
+  
+  (use-package ef-themes :config (load-theme 'ef-light))
 #+end_src
 
 *** ox-hugo
@@ -214,6 +232,9 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 powers this blog).
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; ox-hugo
+  
   (use-package ox-hugo
       :config
     (with-eval-after-load 'ox
@@ -225,6 +246,9 @@ powers this blog).
 for ease-of-access:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; magit
+
   (use-package magit
       :config
     (global-set-key (kbd "C-x m") 'magit-status))
@@ -236,6 +260,9 @@ This package uses char-based decision trees for optimal buffer
 navigation. ~C-;~ is bound to ~avy-goto-char~:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; avy
+
   (use-package avy
       :config
     (global-set-key (kbd "C-;") 'avy-goto-char)
@@ -247,6 +274,9 @@ An advanced completion mechanism. Includes helpful prompts for
 commands, dired, swiper and more...
 
 #+begin_src lisp :tangle ~/.emacs.d/init-bin.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; ivy
+
   (use-package counsel)
 
   (use-package ivy
@@ -283,6 +313,9 @@ commands, dired, swiper and more...
 Better search:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; swiper
+
   (use-package swiper)
   (global-set-key "\C-s" 'swiper)
 #+end_src
@@ -291,22 +324,25 @@ Better search:
 Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-    (use-package vertico
-        :init
-      (vertico-mode)
-      (setq vertico-count 20))
-  
-    ;; Configure directory extension.
-    (use-package vertico-directory
-        :after vertico
-        :ensure nil
-        ;; More convenient directory navigation commands
-        :bind (:map vertico-map
-                    ("RET" . vertico-directory-enter)
-                    ("DEL" . vertico-directory-delete-char)
-                    ("M-DEL" . vertico-directory-delete-word))
-        ;; Tidy shadowed file names
-        :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; vertico
+
+  (use-package vertico
+      :init
+    (vertico-mode)
+    (setq vertico-count 20))
+
+  ;; Configure directory extension.
+  (use-package vertico-directory
+      :after vertico
+      :ensure nil
+      ;; More convenient directory navigation commands
+      :bind (:map vertico-map
+                  ("RET" . vertico-directory-enter)
+                  ("DEL" . vertico-directory-delete-char)
+                  ("M-DEL" . vertico-directory-delete-word))
+      ;; Tidy shadowed file names
+      :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 #+end_src
 
@@ -314,6 +350,9 @@ Vertico is a performant and minimalistic completion tool which extends the defau
 Provides rich descriptions next to minibuffer completions.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; marginalia
+
   (use-package marginalia
       :init
     (marginalia-mode))
@@ -321,6 +360,9 @@ Provides rich descriptions next to minibuffer completions.
 
 *** counsel
 #+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; counsel
+  
   (use-package counsel)
 #+end_src
 
@@ -330,6 +372,8 @@ Provides rich descriptions next to minibuffer completions.
   (global-set-key (kbd "C-SPC") 'counsel-git)
   (global-set-key (kbd "M-SPC") 'switch-to-buffer)
 #+end_src
+
+j
 *** elfeed
 Serves RSS feeds. The following lines define my subscription list:
 
@@ -636,6 +680,11 @@ Setup the Elixir Language Server:
   (require 'eglot)
 
   (add-to-list 'eglot-server-programs '(elixir-mode "~/elixir-ls/language_server.sh"))
+#+end_src
+
+*** darkroom-mode
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package darkroom)
 #+end_src
 
 
