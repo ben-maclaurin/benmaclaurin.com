@@ -88,7 +88,7 @@ Set the default font size and face.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; font
   
-  (set-face-attribute 'default nil :font "Roboto Mono" :height 165)
+  (set-face-attribute 'default nil :font "IBM Plex Mono" :height 165)
 #+end_src
 
 *** Open this file
@@ -117,12 +117,20 @@ of thoughts/ideas/tasks (and their contexts).
 
 I have specified the following templates and keybindings:
 
+**** todo-keywords
+Modify the default to-do keywords
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (setq org-todo-keywords
+      '((sequence "TODO" "IN PROGRESS" "|" "DONE" "DELEGATED")))
+#+end_src
+
 **** org-agenda
 Keybinding for org-agenda mode:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; org
+  ;; org agenda mode
   
   (global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
 #+end_src
@@ -189,6 +197,11 @@ Persist cursor locations across sessions.
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 #+end_src
 
+*** Truncate lines by default
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (toggle-truncate-lines)
+#+end_src
+
 ** Packages
 External packages I have installed.
 
@@ -251,7 +264,7 @@ for ease-of-access:
 
   (use-package magit
       :config
-    (global-set-key (kbd "C-x m") 'magit-status))
+    (global-set-key (kbd "C-x m") (lambda () (interactive) (split-window-right) (other-window-prefix) (magit-status))))
 #+end_src
 
 *** avy
@@ -367,10 +380,11 @@ Provides rich descriptions next to minibuffer completions.
 #+end_src
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  (global-set-key (kbd "C-q") 'counsel-git)
+  (global-set-key (kbd "C-q") nil)
   (global-set-key (kbd "C-c g") 'counsel-git-grep)
   (global-set-key (kbd "C-SPC") 'counsel-git)
   (global-set-key (kbd "M-SPC") 'switch-to-buffer)
+  (global-set-key (kbd "C-x b") nil)
 #+end_src
 
 j
@@ -504,6 +518,11 @@ Switch to normal mode by pressing ~j~ and ~k~ in quick succession.
     (key-chord-mode 1))
 #+end_src
 
+*** emaclaurin
+My own custom mode (WIP):
+
+
+
 *** meow
 A modal editor.
 
@@ -535,7 +554,7 @@ A modal editor.
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
    '("8" . meow-expand-8)
-   '("7" . meow-expand-7)
+   '("7" . meow-expand-7) 
    '("6" . meow-expand-6)
    '("5" . meow-expand-5)
    '("4" . meow-expand-4)
@@ -592,7 +611,124 @@ A modal editor.
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
    '("'" . repeat)
+   '("s" . meow-hyper-mode)
+   '("\"" . meow-hyper-string)
+   '("(" . meow-hyper-paren)
+   '(")" . meow-hyper-paren)
    '("<escape>" . ignore)))
+#+end_src
+
+
+**** meow-hyper
+Create a /hyper/ mode for meow.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+    (setq meow-hyper-keymap (make-keymap))
+  (meow-define-state hyper
+    "a hyper mode for meow insertions"
+    :lighter " [H]"
+    :keymap meow-hyper-keymap)
+
+  ;; meow-define-state creates the variable
+  (setq meow-cursor-type-hyper 'hollow)
+
+  (meow-define-keys 'hyper
+    '("<escape>" . meow-normal-mode)
+    '("h" . meow-hyperhtml-mode))
+#+end_src
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+    (defun meow-hyper-string () (interactive)
+        (let (pos1 pos2 bds)
+  (if (and transient-mark-mode mark-active)
+      (progn
+        (goto-char (region-end))
+        (insert "\"")
+        (goto-char (region-beginning))
+        (insert "\""))
+      (insert "\"\"")
+       (meow-normal-mode))))
+
+        (defun meow-hyper-paren () (interactive)
+          (let (pos1 pos2 bds)
+    (if (and transient-mark-mode mark-active)
+        (progn
+          (goto-char (region-end))
+          (insert ")")
+          (goto-char (region-beginning))
+          (insert "("))
+        (insert "()")
+         (meow-normal-mode))))
+
+#+end_src
+
+**** meow-hyper-html
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+       (setq meow-hyperhtml-keymap (make-keymap))
+     (meow-define-state hyperhtml
+       "a hyper mode for meow insertions"
+       :lighter " [HH]"
+       :keymap meow-hyperhtml-keymap)
+
+     ;; meow-define-state creates the variable
+    (setq meow-cursor-type-hyperhtml 'hbar)
+
+      (meow-define-keys 'hyperhtml
+       '("<escape>" . meow-normal-mode)
+       '("d" . meow-hyper-html-div-class)
+       '("D" . meow-hyper-html-div)
+       '("p" . meow-hyper-html-p-class)
+       '("P" . meow-hyper-html-p))
+
+#+end_src
+
+
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+      (defun meow-hyper-html-div () (interactive)
+          (let (pos1 pos2 bds)
+    (if (and transient-mark-mode mark-active)
+        (progn
+          (goto-char (region-end))
+          (insert "</div>")
+          (goto-char (region-beginning))
+          (insert "<div>") (meow-normal-mode))
+        (insert "<div></div>")
+         (meow-normal-mode))))
+
+      (defun meow-hyper-html-div-class () (interactive)
+          (let (pos1 pos2 bds)
+    (if (and transient-mark-mode mark-active)
+        (progn
+          (goto-char (region-end))
+          (insert "</div>")
+          (goto-char (region-beginning))
+          (insert "<div className=\"\">") (meow-normal-mode))
+        (insert "<div className=\"\"></div>")
+         (meow-normal-mode))))
+
+  (defun meow-hyper-html-p () (interactive)
+          (let (pos1 pos2 bds)
+    (if (and transient-mark-mode mark-active)
+        (progn
+          (goto-char (region-end))
+          (insert "</p>")
+          (goto-char (region-beginning))
+          (insert "<p>") (meow-normal-mode))
+        (insert "<p></p>")
+        (meow-normal-mode))))
+  
+    (defun meow-hyper-html-p-class () (interactive)
+          (let (pos1 pos2 bds)
+    (if (and transient-mark-mode mark-active)
+        (progn
+          (goto-char (region-end))
+          (insert "</p>")
+          (goto-char (region-beginning))
+          (insert "<p className=\"\">") (meow-normal-mode))
+        (insert "<p className=\"\"></p>")
+        (meow-normal-mode))))
+
 #+end_src
 
 I have swapped ~w~ and ~e~. I have also mapped ~O~ and ~o~ to new line above and below respectively. This is so I don't
@@ -612,9 +748,14 @@ Register a new inner bound for <> tags:
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
-  (add-to-list 'meow-char-thing-table '(?a . tag))
-#+end_src
 
+  (add-to-list 'meow-char-thing-table '(?\" . string))
+  (add-to-list 'meow-char-thing-table '(?\( . round))
+  (add-to-list 'meow-char-thing-table '(?\) . round))
+
+  (add-to-list 'meow-char-thing-table '(?\{ . curly))
+  (add-to-list 'meow-char-thing-table '(?\} . curly))
+  #+end_src
 
 *** typescript-mode
 Adds Typescript support to Emacs.
@@ -683,9 +824,48 @@ Setup the Elixir Language Server:
 #+end_src
 
 *** darkroom-mode
+Distraction-free writing and presenting.
+
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package darkroom)
 #+end_src
+
+*** pulsar
+Don't lose the cursor:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package pulsar
+      :init
+    (setq pulsar-pulse t)
+    (setq pulsar-delay 0.055)
+    (setq pulsar-iterations 10)
+    (setq pulsar-face 'pulsar-magenta)
+    (setq pulsar-highlight-face 'pulsar-yellow)
+
+    (pulsar-global-mode 1))
+#+end_src
+
+*** move-text
+Easily move lines up and down in the editor.
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package move-text
+      :init
+    (global-set-key (kbd "M-j") 'move-text-line-down)
+    (global-set-key (kbd "M-k") 'move-text-line-up)
+    (move-text-default-bindings))
+#+end_src
+
+*** devdocs
+Provides devdocs support with syntax highlighting:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+      (use-package devdocs
+          :config
+        (global-set-key (kbd "C-h D") 'devdocs-lookup))
+#+end_src
+
+
 
 
 * DONE Fast motions with avy and evil
@@ -753,7 +933,6 @@ but couldn't get it to work properly.
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/FiLgoZgaqYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 #+end_export
 
-
 * Rust: Trait Objects and the Newtype Pattern
 ** Introduction
 I built a simple Hacker News wrapper in Rust to learn about API design
@@ -778,6 +957,7 @@ simple rule here:
 
 ** Defining the item type
 First, I defined the item type. 
+
 
 
 
