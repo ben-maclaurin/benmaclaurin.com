@@ -112,7 +112,29 @@ Once edits have been made, ~org-babel-tangle~ can be executed with
 #+end_src
 
 *** Org
-A set of configurations extending the [[https://orgmode.org/][org major mode]].
+A set of configurations extending the [[https://orgmode.org/][org major mode]]. 
+
+**** Custom org mode fonts
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package mixed-pitch
+  :hook
+  ;; If you want it in all text modes:
+  (text-mode . mixed-pitch-mode))
+
+  (custom-theme-set-faces
+   'user
+   '(variable-pitch ((t (:family "Fira Sans" :height 180))))
+   '(fixed-pitch ((t ( :family "IBM Plex Mono" :height 160)))))
+
+  (add-hook 'org-mode-hook 'variable-pitch-mode)
+#+end_src
+
+**** Hide emphasis markers
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (setq org-hide-emphasis-markers t)
+#+end_src
 
 **** org-capture-templates
 ~org-capture~ is a helpful utility which enables the quick collation
@@ -181,7 +203,7 @@ Enable relative line numbers in editors.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; line numbers
 
-  (global-display-line-numbers-mode)
+  ;;(global-display-line-numbers-mode)
 #+end_src
 
 *** Save place
@@ -869,7 +891,6 @@ Provides devdocs support with syntax highlighting:
       :config
     (global-set-key (kbd "C-h D") 'devdocs-lookup))
 #+end_src
-
 
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
