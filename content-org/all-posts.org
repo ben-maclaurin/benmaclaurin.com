@@ -578,9 +578,6 @@ A modal editor.
    '("<escape>" . ignore)))
 #+end_src
 
-I have swapped ~w~ and ~e~. I have also mapped ~O~ and ~o~ to new line above and below respectively. This is so I don't
-completely lose my Vim muscle memory.
-
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (use-package meow
       :config
