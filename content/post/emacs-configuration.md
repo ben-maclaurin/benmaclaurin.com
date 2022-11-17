@@ -30,17 +30,14 @@ draft = false
     - [ox-hugo](#ox-hugo)
     - [magit](#magit)
     - [avy](#avy)
-    - [ivy](#ivy)
     - [swiper](#swiper)
     - [vertico](#vertico)
     - [marginalia](#marginalia)
     - [counsel](#counsel)
     - [elfeed](#elfeed)
-    - [embark](#embark)
     - [which-key](#which-key)
     - [org-roam](#org-roam)
     - [eglot](#eglot)
-    - [org-bullets](#org-bullets)
     - [expand-region](#expand-region)
     - [company-mode](#company-mode)
     - [evil-mode](#evil-mode)
@@ -48,11 +45,13 @@ draft = false
     - [meow](#meow)
     - [typescript-mode](#typescript-mode)
     - [aphelia](#aphelia)
-    - [doom-themes](#doom-themes)
     - [go-mode](#go-mode)
     - [savehist](#savehist)
     - [elixir-mode](#elixir-mode)
     - [elixir-ls](#elixir-ls)
+    - [pulsar](#pulsar)
+    - [move-text](#move-text)
+    - [devdocs](#devdocs)
 
 </div>
 <!--endtoc-->
@@ -73,6 +72,9 @@ to run.
 The following lines initialise the package archives.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; archives
+
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -90,6 +92,9 @@ The following lines initialise the package archives.
 Less verbose package definitions and management...
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; use-package
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
@@ -111,6 +116,9 @@ Reduce clutter and noise in the default Emacs GUI (e.g. hides scroll
 bar and menu bar).
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; display
+
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
@@ -124,6 +132,9 @@ Remap the Emacs meta (M) modifier to the macOS command key for
 improved ergonomics and comfort.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; meta key
+
 (setq mac-command-modifier 'meta)
 ```
 
@@ -133,7 +144,10 @@ improved ergonomics and comfort.
 Set the default font size and face.
 
 ```lisp
-(set-face-attribute 'default nil :font "Iosevka Comfy" :height 165)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; font
+
+(set-face-attribute 'default nil :font "IBM Plex Mono" :height 165)
 ```
 
 
@@ -142,6 +156,9 @@ Set the default font size and face.
 Keybinding to enable swift modification of this file.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; open this file
+
 (global-set-key (kbd "C-x .") (lambda () (interactive) (find-file "~/Developer/ben-maclaurin.github.io/content-org/all-posts.org")))
 ```
 
@@ -149,6 +166,9 @@ Once edits have been made, `org-babel-tangle` can be executed with
 `C-c C-v t`, followed by `C-x r .` to reload `init.el`:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; reload init file
+
 (global-set-key (kbd "C-x r .") (lambda () (interactive) (load-file "~/.emacs.d/init.el")))
 ```
 
@@ -166,11 +186,27 @@ of thoughts/ideas/tasks (and their contexts).
 I have specified the following templates and keybindings:
 
 
+#### todo-keywords {#todo-keywords}
+
+Modify the default to-do keywords
+
+```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org todo keywords
+
+(setq org-todo-keywords
+    '((sequence "TODO" "IN PROGRESS" "|" "DONE" "DELEGATED")))
+```
+
+
 #### org-agenda {#org-agenda}
 
 Keybinding for org-agenda mode:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org agenda mode
+
 (global-set-key (kbd "C-c a") (lambda () (interactive) (org-agenda)))
 ```
 
@@ -181,6 +217,9 @@ Two motion mnemonics inspired by `C-n` and `C-p` which jump eight
 lines (plus or minus depending on direction):
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; movement mnemonics
+
 (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 8)))
 (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 8)))
 ```
@@ -191,6 +230,9 @@ lines (plus or minus depending on direction):
 Keybinding to toggle visual-line-mode for buffer wrapping:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; visual line mode
+
 (global-set-key (kbd "C-x v l") (lambda () (interactive) (visual-line-mode 'toggle)))
 ```
 
@@ -200,6 +242,9 @@ Keybinding to toggle visual-line-mode for buffer wrapping:
 Set the location for agenda files:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org agenda files location
+
 (setq org-agenda-files '("~/org/task.org"))
 ```
 
@@ -209,6 +254,9 @@ Set the location for agenda files:
 Enable relative line numbers in editors.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; line numbers
+
 (global-display-line-numbers-mode)
 ```
 
@@ -218,6 +266,9 @@ Enable relative line numbers in editors.
 Persist cursor locations across sessions.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; save place
+
 (save-place-mode 1)
 ```
 
@@ -225,6 +276,9 @@ Persist cursor locations across sessions.
 ### Allow hash key entry on macOS {#allow-hash-key-entry-on-macos}
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; allow hash key entry on macOS
+
 (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
 ```
 
@@ -241,6 +295,9 @@ highlighting. The lines below install `tree-sitter` and enable the
 mode globally.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; tree-sitter
+
 (global-tree-sitter-mode)
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ```
@@ -251,6 +308,9 @@ mode globally.
 Major mode support for the Rust programming language.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; rust-mode
+
 (use-package rust-mode
     :config
   (require 'rust-mode))
@@ -262,9 +322,10 @@ Major mode support for the Rust programming language.
 A beautiful and accessible collection of themes by Prot Stavrou.
 
 ```lisp
-(use-package ef-themes
-    :config
-  (load-theme 'ef-night))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ef-themes
+
+(use-package ef-themes :config (load-theme 'ef-spring))
 ```
 
 
@@ -274,6 +335,9 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 powers this blog).
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ox-hugo
+
 (use-package ox-hugo
     :config
   (with-eval-after-load 'ox
@@ -287,9 +351,12 @@ powers this blog).
 for ease-of-access:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; magit
+
 (use-package magit
     :config
-  (global-set-key (kbd "C-x m") 'magit-status))
+  (global-set-key (kbd "C-x m") (lambda () (interactive) (split-window-right) (other-window-prefix) (magit-status))))
 ```
 
 
@@ -299,49 +366,13 @@ This package uses char-based decision trees for optimal buffer
 navigation. `C-;` is bound to `avy-goto-char`:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; avy
+
 (use-package avy
     :config
   (global-set-key (kbd "C-;") 'avy-goto-char)
   (global-set-key (kbd "C-l") 'avy-goto-line))
-```
-
-
-### ivy {#ivy}
-
-An advanced completion mechanism. Includes helpful prompts for
-commands, dired, swiper and more...
-
-```lisp
-(use-package counsel)
-
-(use-package ivy
-    :config
-  (ivy-mode)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  ;; enable this if you want `swiper' to use it
-  ;; (setq search-default-mode #'char-fold-to-regexp)
-  (global-set-key "\C-s" 'swiper)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  (global-set-key (kbd "<f6>") 'ivy-resume)
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
-  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
-  (global-set-key (kbd "<f1> l") 'counsel-find-library)
-  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c k") 'counsel-ag)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
-```
-
-```lisp
-(global-set-key (kbd "C-q") 'counsel-git-grep)
 ```
 
 
@@ -350,6 +381,9 @@ commands, dired, swiper and more...
 Better search:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; swiper
+
 (use-package swiper)
 (global-set-key "\C-s" 'swiper)
 ```
@@ -360,21 +394,21 @@ Better search:
 Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; vertico
+
 (use-package vertico
     :init
   (vertico-mode)
   (setq vertico-count 20))
 
-;; Configure directory extension.
 (use-package vertico-directory
     :after vertico
     :ensure nil
-    ;; More convenient directory navigation commands
     :bind (:map vertico-map
 		("RET" . vertico-directory-enter)
 		("DEL" . vertico-directory-delete-char)
 		("M-DEL" . vertico-directory-delete-word))
-    ;; Tidy shadowed file names
     :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 ```
 
@@ -384,6 +418,9 @@ Vertico is a performant and minimalistic completion tool which extends the defau
 Provides rich descriptions next to minibuffer completions.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; marginalia
+
 (use-package marginalia
     :init
   (marginalia-mode))
@@ -393,12 +430,18 @@ Provides rich descriptions next to minibuffer completions.
 ### counsel {#counsel}
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; counsel
+
 (use-package counsel)
 ```
 
 ```lisp
-(global-set-key (kbd "C-q") 'counsel-git-grep)
-(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-q") nil)
+(global-set-key (kbd "C-c g") 'counsel-git-grep)
+(global-set-key (kbd "C-SPC") 'counsel-git)
+(global-set-key (kbd "M-SPC") 'switch-to-buffer)
+(global-set-key (kbd "C-x b") nil)
 ```
 
 
@@ -407,6 +450,9 @@ Provides rich descriptions next to minibuffer completions.
 Serves RSS feeds. The following lines define my subscription list:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; elfeed
+
 (use-package elfeed
     :config
   (setq elfeed-feeds
@@ -439,23 +485,15 @@ Keybinding to update the feeds:
 ```
 
 
-### embark {#embark}
-
-Enables a set of quick access commands around the point:
-
-```lisp
-(use-package embark
-    :config
-  (global-set-key (kbd "C-.") (lambda () (interactive) (embark-act))))
-```
-
-
 ### which-key {#which-key}
 
 A minor mode that provides prompts and tips around an incomplete key
 sequence:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; which-key
+
 (use-package which-key
     :config
   (require 'which-key)
@@ -468,6 +506,9 @@ sequence:
 Org-based knowledge management system.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-roam
+
 (use-package org-roam
     :ensure t
     :custom
@@ -488,19 +529,10 @@ Org-based knowledge management system.
 An LSP client... tries to match a locally-installed LSP with the current buffer:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eglot
+
 (use-package eglot)
-```
-
-
-### org-bullets {#org-bullets}
-
-Renders nice bullet point UTF characters to replace org headline stars:
-
-```lisp
-(use-package org-bullets
-    :config
-  (require 'org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 ```
 
 
@@ -509,8 +541,11 @@ Renders nice bullet point UTF characters to replace org headline stars:
 Increase a selection by a set of semantic units.
 
 ```lisp
-(use-package expand-region
-    :bind ("C-." . 'er/expand-region))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; expand-region
+
+;; (use-package expand-region
+;;     :bind ("C-" . 'er/expand-region))
 ```
 
 
@@ -519,6 +554,9 @@ Increase a selection by a set of semantic units.
 A completions helper. Improves on the existing eglot completion mechanism:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; company-mode
+
 (use-package company
     :config
   (add-hook 'after-init-hook 'global-company-mode))
@@ -557,6 +595,9 @@ Switch to normal mode by pressing `j` and `k` in quick succession.
 A modal editor.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; meow
+
 (defun meow-setup ()
 (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
 (meow-motion-overwrite-define-key
@@ -594,9 +635,10 @@ A modal editor.
  '("-" . negative-argument)
  '(";" . meow-reverse)
  '("," . meow-inner-of-thing)
- '("." . meow-bounds-of-thing)
- '("[" . meow-beginning-of-thing)
- '("]" . meow-end-of-thing)
+ ;;'("." . meow-bounds-of-thing)
+ '("." . er/expand-region)
+ ;;'("[" . meow-beginning-of-thing)
+ ;;'("]" . meow-end-of-thing)
  '("a" . meow-append)
  '("A" . meow-open-below)
  '("b" . meow-back-word)
@@ -632,7 +674,7 @@ A modal editor.
  '("t" . meow-till)
  '("u" . meow-undo)
  '("U" . meow-undo-in-selection)
- '("/" . meow-visit)
+ '("/" . meow-bounds-of-thing)
  '("e" . meow-mark-word)
  '("E" . meow-mark-symbol)
  '("v" . meow-line)
@@ -641,6 +683,15 @@ A modal editor.
  '("Y" . meow-sync-grab)
  '("z" . meow-pop-selection)
  '("'" . repeat)
+ '("s" . meow-hyper-mode)
+ '("\"" . meow-hyper-string)
+ '("(" . meow-hyper-paren)
+ '(")" . meow-hyper-paren)
+ '("'" . meow-hyper-quote)
+ '("{" . meow-hyper-curly)
+ '("}" . meow-hyper-curly)
+ '("[" . meow-hyper-bracket)
+ '("]" . meow-hyper-bracket)
  '("<escape>" . ignore)))
 ```
 
@@ -661,8 +712,169 @@ Register a new inner bound for &lt;&gt; tags:
 
 ```lisp
 (meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
-(add-to-list 'meow-char-thing-table '(?a . tag))
+
+(add-to-list 'meow-char-thing-table '(?\" . string))
+(add-to-list 'meow-char-thing-table '(?\( . round))
+(add-to-list 'meow-char-thing-table '(?\) . round))
+
+(add-to-list 'meow-char-thing-table '(?\{ . curly))
+(add-to-list 'meow-char-thing-table '(?\} . curly))
+
+(add-to-list 'meow-char-thing-table '(?\[ . square))
+(add-to-list 'meow-char-thing-table '(?\] . square))
 ```
+
+
+#### meow-hyper {#meow-hyper}
+
+Create a _hyper_ mode for meow.
+
+```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; meow-hyper
+
+(setq meow-hyper-keymap (make-keymap))
+(meow-define-state hyper
+  "a hyper mode for meow insertions"
+  :lighter " [H]"
+  :keymap meow-hyper-keymap)
+
+(setq meow-cursor-type-hyper 'hollow)
+
+(meow-define-keys 'hyper
+  '("<escape>" . meow-normal-mode)
+  '("h" . meow-hyperhtml-mode))
+```
+
+```lisp
+(defun meow-hyper-string () (interactive)
+       (if (and transient-mark-mode mark-active)
+	   (progn
+	     (goto-char (region-end))
+	     (insert "\"")
+	     (goto-char (region-beginning))
+	     (insert "\""))
+	   (insert "\"\"")
+	   (meow-normal-mode)))
+
+(defun meow-hyper-quote () (interactive)
+       (if (and transient-mark-mode mark-active)
+	   (progn
+	     (goto-char (region-end))
+	     (insert "'")
+	     (goto-char (region-beginning))
+	     (insert "'"))
+	   (insert "'")
+	   (meow-normal-mode)))
+
+(defun meow-hyper-paren () (interactive)
+       (if (and transient-mark-mode mark-active)
+	   (progn
+	     (goto-char (region-end))
+	     (insert ")")
+	     (goto-char (region-beginning))
+	     (insert "("))
+	   (insert "()")
+	   (meow-normal-mode)))
+
+(defun meow-hyper-curly () (interactive)
+       (if (and transient-mark-mode mark-active)
+	   (progn
+	     (goto-char (region-end))
+	     (insert "}")
+	     (goto-char (region-beginning))
+	     (insert "{"))
+	   (insert "{}")
+	   (meow-normal-mode)))
+
+(defun meow-hyper-bracket () (interactive)
+       (if (and transient-mark-mode mark-active)
+	   (progn
+	     (goto-char (region-end))
+	     (insert "]")
+	     (goto-char (region-beginning))
+	     (insert "["))
+	   (insert "[]")
+	   (meow-normal-mode)))
+
+  (defun meow-hyper-tag () (interactive)
+       (if (and transient-mark-mode mark-active)
+	   (progn
+	     (goto-char (region-end))
+	     (insert ">")
+	     (goto-char (region-beginning))
+	     (insert "<"))
+	   (insert "<>")
+	   (meow-normal-mode)))
+```
+
+<!--list-separator-->
+
+-  meow-hyper-html
+
+    A meow hyper mode specifically designed around HTML entry.
+
+    ```lisp
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; meow-hyper-html
+
+    (setq meow-hyperhtml-keymap (make-keymap))
+    (meow-define-state hyperhtml
+      "a hyper mode for meow insertions"
+      :lighter " [HH]"
+      :keymap meow-hyperhtml-keymap)
+
+    (setq meow-cursor-type-hyperhtml 'hbar)
+
+    (meow-define-keys 'hyperhtml
+      '("<escape>" . meow-normal-mode)
+      '("d" . meow-hyper-html-div-class)
+      '("D" . meow-hyper-html-div)
+      '("p" . meow-hyper-html-p-class)
+      '("P" . meow-hyper-html-p))
+    ```
+
+    ```lisp
+    (defun meow-hyper-html-div () (interactive)
+           (if (and transient-mark-mode mark-active)
+    	   (progn
+    	     (goto-char (region-end))
+    	     (insert "</div>")
+    	     (goto-char (region-beginning))
+    	     (insert "<div>") (meow-normal-mode))
+    	   (insert "<div></div>")
+    	   (meow-normal-mode)))
+
+    (defun meow-hyper-html-div-class () (interactive)
+           (if (and transient-mark-mode mark-active)
+    	   (progn
+    	     (goto-char (region-end))
+    	     (insert "</div>")
+    	     (goto-char (region-beginning))
+    	     (insert "<div className=\"\">") (meow-normal-mode))
+    	   (insert "<div className=\"\"></div>")
+    	   (meow-normal-mode)))
+
+    (defun meow-hyper-html-p () (interactive)
+           (if (and transient-mark-mode mark-active)
+    	   (progn
+    	     (goto-char (region-end))
+    	     (insert "</p>")
+    	     (goto-char (region-beginning))
+    	     (insert "<p>") (meow-normal-mode))
+    	   (insert "<p></p>")
+    	   (meow-normal-mode)))
+
+    (defun meow-hyper-html-p-class () (interactive)
+           (if (and transient-mark-mode mark-active)
+    	   (progn
+    	     (goto-char (region-end))
+    	     (insert "</p>")
+    	     (goto-char (region-beginning))
+    	     (insert "<p className=\"\">") (meow-normal-mode))
+    	   (insert "<p className=\"\"></p>")
+    	   (meow-normal-mode)))
+    ```
 
 
 ### typescript-mode {#typescript-mode}
@@ -670,18 +882,16 @@ Register a new inner bound for &lt;&gt; tags:
 Adds Typescript support to Emacs.
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; typescript-mode
+
 (use-package typescript-mode
     :after tree-sitter
     :config
-    ;; we choose this instead of tsx-mode so that eglot can automatically figure out language for server
-    ;; see https://github.com/joaotavora/eglot/issues/624 and https://github.com/joaotavora/eglot#handling-quirky-servers
     (define-derived-mode typescriptreact-mode typescript-mode
       "TypeScript TSX")
 
-    ;; use our derived mode for tsx files
     (add-to-list 'auto-mode-alist '("\\.tsx?\\'" . typescriptreact-mode))
-    ;; by default, typescript-mode is mapped to the treesitter typescript parser
-    ;; use our derived mode to map both .tsx AND .ts -> typescriptreact-mode -> treesitter tsx
     (add-to-list 'tree-sitter-major-mode-language-alist '(typescriptreact-mode . tsx)))
 ```
 
@@ -691,8 +901,9 @@ Adds Typescript support to Emacs.
 Auto formatting for TS documents.
 
 ```lisp
-;; auto-format different source code files extremely intelligently
-;; https://github.com/radian-software/apheleia
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; aphelia
+
 (use-package apheleia
     :ensure t
     :config
@@ -700,16 +911,12 @@ Auto formatting for TS documents.
 ```
 
 
-### doom-themes {#doom-themes}
-
-```lisp
-(use-package doom-themes)
-```
-
-
 ### go-mode {#go-mode}
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; go-mode
+
 (use-package go-mode)
 ```
 
@@ -719,6 +926,9 @@ Auto formatting for TS documents.
 Persist minibuffer history across Emacs sessions:
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; savehist
+
 (use-package savehist
     :init
   (savehist-mode))
@@ -728,6 +938,9 @@ Persist minibuffer history across Emacs sessions:
 ### elixir-mode {#elixir-mode}
 
 ```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; elixir-mode
+
 (use-package elixir-mode)
 ```
 
@@ -740,4 +953,57 @@ Setup the Elixir Language Server:
 (require 'eglot)
 
 (add-to-list 'eglot-server-programs '(elixir-mode "~/elixir-ls/language_server.sh"))
+```
+
+
+### pulsar {#pulsar}
+
+Don't lose the cursor:
+
+```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; pulsar
+
+(use-package pulsar
+    :init
+  (setq pulsar-pulse t)
+  (setq pulsar-delay 0.055)
+  (setq pulsar-iterations 10)
+  (setq pulsar-face 'pulsar-magenta)
+  (setq pulsar-highlight-face 'pulsar-yellow)
+
+  (pulsar-global-mode 1))
+```
+
+
+### move-text {#move-text}
+
+Easily move lines up and down in the editor.
+
+```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; move-text
+
+(use-package move-text
+    :init
+  (global-set-key (kbd "M-j") 'move-text-line-down)
+  (global-set-key (kbd "M-k") 'move-text-line-up)
+  (global-set-key (kbd "C-S-j") 'move-text-down)
+  (global-set-key (kbd "C-S-k") 'move-text-up)
+
+  (move-text-default-bindings))
+```
+
+
+### devdocs {#devdocs}
+
+Provides devdocs support with syntax highlighting:
+
+```lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; devdocs
+
+(use-package devdocs
+    :config
+  (global-set-key (kbd "C-h D") 'devdocs-lookup))
 ```
