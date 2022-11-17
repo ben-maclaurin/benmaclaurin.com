@@ -4,6 +4,58 @@ date = 2022-11-04T20:20:00+00:00
 draft = false
 +++
 
+<div class="ox-hugo-toc toc">
+
+<div class="heading">Table of Contents</div>
+
+- [Setup Processes](#setup-processes)
+    - [Archives](#archives)
+    - [use-package](#use-package)
+- [Core Modifications](#core-modifications)
+    - [Display](#display)
+    - [Meta key](#meta-key)
+    - [Font](#font)
+    - [Open this file](#open-this-file)
+    - [Org](#org)
+    - [Movement mnemonics](#movement-mnemonics)
+    - [Visual line mode](#visual-line-mode)
+    - [Org agenda files location](#org-agenda-files-location)
+    - [Line numbers](#line-numbers)
+    - [Save place](#save-place)
+    - [Allow hash key entry on macOS](#allow-hash-key-entry-on-macos)
+- [Packages](#packages)
+    - [tree-sitter](#tree-sitter)
+    - [rust-mode](#rust-mode)
+    - [ef-themes](#ef-themes)
+    - [ox-hugo](#ox-hugo)
+    - [magit](#magit)
+    - [avy](#avy)
+    - [swiper](#swiper)
+    - [vertico](#vertico)
+    - [marginalia](#marginalia)
+    - [counsel](#counsel)
+    - [elfeed](#elfeed)
+    - [which-key](#which-key)
+    - [org-roam](#org-roam)
+    - [eglot](#eglot)
+    - [expand-region](#expand-region)
+    - [company-mode](#company-mode)
+    - [evil-mode](#evil-mode)
+    - [key-chord](#key-chord)
+    - [meow](#meow)
+    - [typescript-mode](#typescript-mode)
+    - [aphelia](#aphelia)
+    - [go-mode](#go-mode)
+    - [savehist](#savehist)
+    - [elixir-mode](#elixir-mode)
+    - [elixir-ls](#elixir-ls)
+    - [pulsar](#pulsar)
+    - [move-text](#move-text)
+    - [devdocs](#devdocs)
+
+</div>
+<!--endtoc-->
+
 This is a [literate programming](https://en.wikipedia.org/wiki/Literate_programming) page, documenting my GNU 'Emacs
 configuration. `org-babel-tangle` is used to output the resulting
 `init.el` file. The source of this file can be viewed [here](https://github.com/ben-maclaurin/ben-maclaurin.github.io/blob/main/content-org/all-posts.org#emacs-config).
@@ -273,7 +325,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ef-themes
 
-(use-package ef-themes :config (load-theme 'ef-light))
+(use-package ef-themes :config (load-theme 'ef-spring))
 ```
 
 
