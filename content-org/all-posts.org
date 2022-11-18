@@ -124,7 +124,7 @@ A set of configurations extending the [[https://orgmode.org/][org major mode]].
 
   (custom-theme-set-faces
    'user
-   '(variable-pitch ((t (:family "Fira Sans" :height 180))))
+   '(variable-pitch ((t (:family "Atkinson Hyperlegible" :height 180 :weight normal))))
    '(fixed-pitch ((t ( :family "IBM Plex Mono" :height 160)))))
 
   (add-hook 'org-mode-hook 'variable-pitch-mode)
