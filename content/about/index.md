@@ -7,7 +7,7 @@ draft = false
 ## About {#about}
 
 Hello. I'm a UI designer and developer based in Edinburgh. I currently
-work at [Mawla](https://mawla.agency/). I spend most of my time in TypeScript, Elixir and Rust.
+work at [Mawla](https://mawla.agency/). I spend most of my time in [TypeScript](https://www.typescriptlang.org/), [Elixir](https://elixir-lang.org/) and [Rust](https://www.rust-lang.org/).
 
 You can find me on:
 

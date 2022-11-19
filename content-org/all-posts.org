@@ -14,7 +14,7 @@ CLOSED: [2022-11-19 Sat 13:20]
 ** About
 
 Hello. I'm a UI designer and developer based in Edinburgh. I currently
-work at [[https://mawla.agency/][Mawla]]. I spend most of my time in TypeScript, Elixir and Rust.
+work at [[https://mawla.agency/][Mawla]]. I spend most of my time in [[https://www.typescriptlang.org/][TypeScript]], [[https://elixir-lang.org/][Elixir]] and [[https://www.rust-lang.org/][Rust]].
 
 You can find me on:
 
@@ -897,6 +897,12 @@ Easily move lines up and down in the editor.
     (global-set-key (kbd "C-S-k") 'move-text-up)
 
     (move-text-default-bindings))
+#+end_src
+
+*** clojure-mode
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package clojure-mode)
 #+end_src
 
 *** devdocs
