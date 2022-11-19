@@ -34,20 +34,15 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   identifier = "home"
   url = "/"
 [[menu.main]]
-  name = "Archives"
+  name = "About"
   weight = 20
-  identifier = "archives"
-  url = "/post/"
+  identifier = "about"
+  url = "/about/"
 [[menu.main]]
   name = "Tags"
-  weight = 40
+  weight = 30
   identifier = "tags"
   url = "/tags/"
-[[menu.main]]
-  name = "Categories"
-  weight = 50
-  identifier = "categories"
-  url = "/categories/"
 
 [params]
   version = "4.x"           # Used to give a friendly message when you have an incompatible update

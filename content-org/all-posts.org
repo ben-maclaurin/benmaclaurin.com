@@ -3,6 +3,25 @@
 #+hugo_base_dir: ../
 #+options: author:nil
 
+* DONE About
+CLOSED: [2022-11-19 Sat 13:20]
+:PROPERTIES:
+:EXPORT_HUGO_SECTION: about
+:EXPORT_OPTIONS: toc:0
+:EXPORT_FILE_NAME: index
+:END:
+
+** About
+
+Hello. I'm a UI designer and developer based in Edinburgh. I currently
+work at [[https://mawla.agency/][Mawla]]. I spend most of my time in TypeScript, Elixir and Rust.
+
+You can find me on:
+
+- [[https://github.com/ben-maclaurin][GitHub]]
+- [[https://open.spotify.com/user/7b6zfcpl3rva2qryhwjyycrsv?si=ad1a6fa2e97a4a9c][Spotify]]
+- [[https://www.are.na/parsing-thoughts][Are.na]]
+
 * DONE Emacs config
 CLOSED: [2022-11-04 Fri 20:20]
 :PROPERTIES:
@@ -116,11 +135,11 @@ A set of configurations extending the [[https://orgmode.org/][org major mode]].
 
 **** Custom org mode fonts
 
-#+begin_src lisp :tangle ~/.emacs.d/init.el
+#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
   (use-package mixed-pitch
-  :hook
-  ;; If you want it in all text modes:
-  (text-mode . mixed-pitch-mode))
+      :hook
+    ;; If you want it in all text modes:
+    (text-mode . mixed-pitch-mode))
 
   (custom-theme-set-faces
    'user
@@ -615,9 +634,9 @@ Register a new inner bound for <> tags:
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (meow-thing-register 'tag '(pair ("<") (">")) '(pair ("<") (">")))
 
-  (add-to-list 'meow-char-thing-table '(?\" . string))
   (add-to-list 'meow-char-thing-table '(?\( . round))
   (add-to-list 'meow-char-thing-table '(?\) . round))
+  (add-to-list 'meow-char-thing-table '(?\" . string))
 
   (add-to-list 'meow-char-thing-table '(?\{ . curly))
   (add-to-list 'meow-char-thing-table '(?\} . curly))
