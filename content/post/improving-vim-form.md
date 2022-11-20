@@ -41,9 +41,5 @@ nnoremap <S-v> <nop>
 
 This disables `v` and `<S-v>` to in [normal mode](https://learnbyexample.github.io/vim_reference/Normal-mode.html). Whilst uncomfortable at first, this helped retrain my muscle memory for both actions. If you are feeling particularly adventurous (or nonchalant), you could try replicating the above for `j` and `k` to train in [line jumping](https://vim.fandom.com/wiki/Go_to_line) and [other efficient](https://github.com/ggandor/leap.nvim) navigation methods.
 
-## Closing note
-
-After a few months of [Neovim](https://neovim.io/), I've recently dived back into the world of JetBrain editors. I love the fact that you can combine the ingenuity of a 30-year-old [modal editor](https://en.wikipedia.org/wiki/Vim_(text_editor)) with the fully-featured and professional [JetBrains suite](https://www.jetbrains.com/). I will likely write a follow up with my thoughts on this, as it is worthy of its own post.
-
 
 

@@ -21,7 +21,7 @@ You can find me on:
 - [[https://github.com/ben-maclaurin][GitHub]]
 - [[https://open.spotify.com/user/7b6zfcpl3rva2qryhwjyycrsv?si=ad1a6fa2e97a4a9c][Spotify]]
 - [[https://www.are.na/parsing-thoughts][Are.na]]
-
+  
 * DONE Emacs config
 CLOSED: [2022-11-04 Fri 20:20]
 :PROPERTIES:
@@ -279,7 +279,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
   
-  (use-package ef-themes :config (load-theme 'ef-spring))
+  (use-package ef-themes :config (load-theme 'ef-light))
 #+end_src
 
 *** ox-hugo
@@ -916,6 +916,7 @@ Provides devdocs support with syntax highlighting:
       :config
     (global-set-key (kbd "C-h D") 'devdocs-lookup))
 #+end_src
+
 
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
