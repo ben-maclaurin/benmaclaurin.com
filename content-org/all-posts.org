@@ -107,7 +107,7 @@ Set the default font size and face.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; font
   
-  (set-face-attribute 'default nil :font "IBM Plex Mono" :height 165)
+  (set-face-attribute 'default nil :font "Noto Sans Mono" :height 165)
 #+end_src
 
 *** Open this file
@@ -236,12 +236,36 @@ Persist cursor locations across sessions.
 #+end_src
 
 *** Allow hash key entry on macOS
-
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; allow hash key entry on macOS
   
   (global-set-key (kbd "M-3") '(lambda () (interactive) (insert "#")))
+#+end_src
+
+*** Change the default scratch message
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+        (setq initial-scratch-message "
+      ;; Maxims:
+      ;;  
+      ;; Don't take refuge in complexity.
+      ;;
+      ;; When trying to understand a complex real-world situation,
+      ;; think of an everyday analogue.
+      ;;
+      ;; The world is much more uncertain than you think.
+      ;;
+      ;; Information is only valuable if it can change your decision.
+      ;;
+      ;; Good decisions sometimes have poor outcomes.
+      ;;
+      ;; Think probabilistically about the world.
+      ;;
+      ;; Strive hard to avoid envy.
+      ;;
+      ;; Make pleasure-enhancing decisions long in advance, to increase
+      ;; the utility of anticipation.
+          ")
 #+end_src
 
 ** Packages
