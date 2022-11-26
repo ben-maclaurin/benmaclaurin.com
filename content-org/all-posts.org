@@ -107,7 +107,8 @@ Set the default font size and face.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; font
   
-  (set-face-attribute 'default nil :font "Iosevka" :height 165)
+  (set-face-attribute 'default nil :font "Essential PragmataPro" :height 175)
+  (set-face-attribute 'fixed-pitch nil :font "Essential PragmataPro" :height 175)
 #+end_src
 
 *** Open this file
@@ -245,27 +246,32 @@ Persist cursor locations across sessions.
 
 *** Change the default scratch message
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-        (setq initial-scratch-message "
-      ;; Maxims:
-      ;;  
-      ;; Don't take refuge in complexity.
-      ;;
-      ;; When trying to understand a complex real-world situation,
-      ;; think of an everyday analogue.
-      ;;
-      ;; The world is much more uncertain than you think.
-      ;;
-      ;; Information is only valuable if it can change your decision.
-      ;;
-      ;; Good decisions sometimes have poor outcomes.
-      ;;
-      ;; Think probabilistically about the world.
-      ;;
-      ;; Strive hard to avoid envy.
-      ;;
-      ;; Make pleasure-enhancing decisions long in advance, to increase
-      ;; the utility of anticipation.
-          ")
+    (setq initial-scratch-message "
+  ;; Maxims:
+  ;;  
+  ;; Don't take refuge in complexity.
+  ;;
+  ;; When trying to understand a complex real-world situation,
+  ;; think of an everyday analogue.
+  ;;
+  ;; The world is much more uncertain than you think.
+  ;;
+  ;; Information is only valuable if it can change your decision.
+  ;;
+  ;; Good decisions sometimes have poor outcomes.
+  ;;
+  ;; Think probabilistically about the world.
+  ;;
+  ;; Strive hard to avoid envy.
+  ;;
+  ;; Make pleasure-enhancing decisions long in advance, to increase
+  ;; the utility of anticipation.
+  ;;
+  ;; 'You want to get into a mental state where if the bad outcome
+  ;; comes to pass, you will only nod your head and say 'I knew
+  ;; this card was in the deck, and I knew the odds, and I would
+  ;; make the same bets again, given the same opportunities.'
+      ")
 #+end_src
 
 ** Packages
@@ -302,8 +308,8 @@ A beautiful and accessible collection of themes by Prot Stavrou.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
-  
-  (use-package ef-themes :config (load-theme 'ef-cherie))
+
+  ;; (use-package ef-themes :config (load-theme 'modus-operandi))
 #+end_src
 
 *** ox-hugo
@@ -953,6 +959,19 @@ Create .epub documents using org-mode:
       (use-package rainbow-delimiters
           :config
         (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+end_src
+
+*** modus-themes
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  ;; Add all your customizations prior to loading the themes
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs nil
+      modus-themes-region '(bg-only no-extend))
+
+;; Load the theme of your choice:
+(load-theme 'modus-operandi) ;; OR (load-theme 'modus-vivendi)
+
+(define-key global-map (kbd "<f5>") #'modus-themes-toggle)
 #+end_src
 
 * DONE Fast motions with avy and evil
