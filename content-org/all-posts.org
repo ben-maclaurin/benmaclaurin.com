@@ -107,7 +107,7 @@ Set the default font size and face.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; font
   
-  (set-face-attribute 'default nil :font "Noto Sans Mono" :height 165)
+  (set-face-attribute 'default nil :font "Iosevka" :height 165)
 #+end_src
 
 *** Open this file
@@ -303,7 +303,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
   
-  (use-package ef-themes :config (load-theme 'ef-light))
+  (use-package ef-themes :config (load-theme 'ef-cherie))
 #+end_src
 
 *** ox-hugo
@@ -405,8 +405,8 @@ Provides rich descriptions next to minibuffer completions.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (global-set-key (kbd "C-q") nil)
   (global-set-key (kbd "C-c g") 'counsel-git-grep)
-  (global-set-key (kbd "C-SPC") 'counsel-git)
-  (global-set-key (kbd "M-SPC") 'switch-to-buffer)
+  (global-set-key (kbd "M-SPC") 'counsel-git)
+  (global-set-key (kbd "C-SPC") 'switch-to-buffer)
   (global-set-key (kbd "C-x b") nil)
 #+end_src
 
@@ -941,6 +941,19 @@ Provides devdocs support with syntax highlighting:
     (global-set-key (kbd "C-h D") 'devdocs-lookup))
 #+end_src
 
+*** ox-epub
+Create .epub documents using org-mode:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package ox-epub)
+#+end_src
+
+*** rainbow-delimiters
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+      (use-package rainbow-delimiters
+          :config
+        (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+#+end_src
 
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
