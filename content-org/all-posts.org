@@ -106,9 +106,11 @@ Set the default font size and face.
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; font
-  
-  (set-face-attribute 'default nil :font "Essential PragmataPro" :height 175)
-  (set-face-attribute 'fixed-pitch nil :font "Essential PragmataPro" :height 175)
+
+  (set-face-attribute 'default nil :font "Essential PragmataPro-18")
+  (set-face-attribute 'fixed-pitch nil :font "Essential PragmataPro-18")
+  ;;(set-face-attribute 'variable-pitch nil :font "Fira Sans" :weight 'semi-bold)
+  ;;(add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
 *** Open this file
@@ -133,22 +135,6 @@ Once edits have been made, ~org-babel-tangle~ can be executed with
 
 *** Org
 A set of configurations extending the [[https://orgmode.org/][org major mode]]. 
-
-**** Custom org mode fonts
-
-#+begin_src lisp :tangle ~/.emacs.d/init-bin.el
-  (use-package mixed-pitch
-      :hook
-    ;; If you want it in all text modes:
-    (text-mode . mixed-pitch-mode))
-
-  (custom-theme-set-faces
-   'user
-   '(variable-pitch ((t (:family "Atkinson Hyperlegible" :height 180 :weight normal))))
-   '(fixed-pitch ((t ( :family "IBM Plex Mono" :height 160)))))
-
-  (add-hook 'org-mode-hook 'variable-pitch-mode)
-#+end_src
 
 **** Hide emphasis markers
 
@@ -309,7 +295,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
 
-  ;; (use-package ef-themes :config (load-theme 'modus-operandi))
+  (use-package ef-themes :config (load-theme 'ef-light))
 #+end_src
 
 *** ox-hugo
@@ -961,18 +947,15 @@ Create .epub documents using org-mode:
         (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 #+end_src
 
-*** modus-themes
+*** olivetti
+A simple mode that allows for a nice writing view/style (focused mode).
+
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;; Add all your customizations prior to loading the themes
-(setq modus-themes-italic-constructs t
-      modus-themes-bold-constructs nil
-      modus-themes-region '(bg-only no-extend))
-
-;; Load the theme of your choice:
-(load-theme 'modus-operandi) ;; OR (load-theme 'modus-vivendi)
-
-(define-key global-map (kbd "<f5>") #'modus-themes-toggle)
+      (use-package olivetti
+          :config
+        (add-hook 'org-mode-hook 'olivetti-mode))
 #+end_src
+
 
 * DONE Fast motions with avy and evil
 CLOSED: [2022-10-30 Sun 00:49]
