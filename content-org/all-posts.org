@@ -75,6 +75,19 @@ Less verbose package definitions and management...
 ** Core Modifications
 A series of QOL changes I have made to the default distribution.
 
+*** Line wrapping
+Some line wrapping rules for text and prog modes:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (add-hook 'text-mode-hook '(lambda ()
+                              (setq truncate-lines nil
+                               word-wrap t)))
+
+  (add-hook 'prog-mode-hook '(lambda ()
+                              (setq truncate-lines t
+                               word-wrap nil)))
+#+end_src
+
 *** Display
 Reduce clutter and noise in the default Emacs GUI (e.g. hides scroll
 bar and menu bar).
@@ -111,8 +124,8 @@ Set the default font size and face.
     :hook
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "SF Mono-18")
-    (set-face-attribute 'fixed-pitch nil :font "SF Mono-18")
+    (set-face-attribute 'default nil :font "Menlo-18")
+    (set-face-attribute 'fixed-pitch nil :font "Menlo-18")
     (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
