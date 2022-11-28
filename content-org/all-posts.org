@@ -104,17 +104,17 @@ improved ergonomics and comfort.
 Set the default font size and face. 
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; font
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; font
 
-  (use-package mixed-pitch
-  :hook
-  (text-mode . mixed-pitch-mode))
+    (use-package mixed-pitch
+    :hook
+    (text-mode . mixed-pitch-mode))
 
-  (set-face-attribute 'default nil :font "SF Mono-18")
-  (set-face-attribute 'fixed-pitch nil :font "SF Mono-18")
-  (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
-;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
+    (set-face-attribute 'default nil :font "SF Mono-18")
+    (set-face-attribute 'fixed-pitch nil :font "SF Mono-18")
+    (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
+  ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
 
@@ -142,12 +142,17 @@ Once edits have been made, ~org-babel-tangle~ can be executed with
 *** Org
 A set of configurations extending the [[https://orgmode.org/][org major mode]]. 
 
+**** Allow for mouse usage
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (require 'org-mouse)
+#+end_src
+
 **** Set the size of org-mode bullets
 #+begin_src lisp :tangle ~/.emacs.d/init.el
   (custom-set-faces
-  '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
-  '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
-  '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
+  '(org-level-1 ((t (:inherit outline-1 :height 1.2))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.1))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
   '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
   '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
 )
@@ -987,6 +992,13 @@ Create Anki notes from within Emacs.
   (use-package anki-editor
       :bind (("C-c i i" . anki-editor-insert-note)
              ("C-c i p" . anki-editor-push-notes)))
+#+end_src
+
+*** python-mode
+An Emacs mode for python:
+
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (use-package python-mode)
 #+end_src
 
 * DONE Fast motions with avy and evil
