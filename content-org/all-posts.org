@@ -852,7 +852,6 @@ A meow hyper mode specifically designed around HTML entry.
              (meow-normal-mode)))
 #+end_src
 
-
 *** typescript-mode
 Adds Typescript support to Emacs.
 
