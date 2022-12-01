@@ -124,9 +124,9 @@ Set the default font size and face.
     :hook
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "Menlo-18")
-    (set-face-attribute 'fixed-pitch nil :font "Menlo-18")
-    (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
+    (set-face-attribute 'default nil :font "Iosevka Comfy-18")
+    (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy-18")
+    (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy-18")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -242,7 +242,7 @@ Enable relative line numbers in editors.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; line numbers
 
-  ;;(global-display-line-numbers-mode)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 #+end_src
 
 *** Save place
@@ -328,7 +328,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
 
-  (use-package ef-themes :config (load-theme 'ef-dark))
+  (use-package ef-themes :config (load-theme 'ef-trio-light))
 #+end_src
 
 *** ox-hugo
