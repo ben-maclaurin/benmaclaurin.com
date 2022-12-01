@@ -124,9 +124,9 @@ Set the default font size and face.
     :hook
     (text-mode . mixed-pitch-mode))
 
-    (set-face-attribute 'default nil :font "Menlo-18")
-    (set-face-attribute 'fixed-pitch nil :font "Menlo-18")
-    (set-face-attribute 'variable-pitch nil :font "SF Pro Display-18")
+    (set-face-attribute 'default nil :font "Iosevka Comfy-18")
+    (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy-18")
+    (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy-18")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -242,7 +242,7 @@ Enable relative line numbers in editors.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; line numbers
 
-  ;;(global-display-line-numbers-mode)
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 #+end_src
 
 *** Save place
@@ -328,7 +328,7 @@ A beautiful and accessible collection of themes by Prot Stavrou.
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; ef-themes
 
-  (use-package ef-themes :config (load-theme 'ef-dark))
+  (use-package ef-themes :config (load-theme 'ef-trio-light))
 #+end_src
 
 *** ox-hugo
@@ -388,7 +388,7 @@ Better search:
 Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; vertico
 
   (use-package vertico
@@ -405,6 +405,16 @@ Vertico is a performant and minimalistic completion tool which extends the defau
                   ("M-DEL" . vertico-directory-delete-word))
       :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+
+  ;; Optionally use the `orderless' completion style.
+  (use-package orderless
+      :init
+    ;; Configure a custom style dispatcher (see the Consult wiki)
+    ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+    ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 
 *** marginalia
@@ -841,7 +851,6 @@ A meow hyper mode specifically designed around HTML entry.
              (insert "<p className=\"\"></p>")
              (meow-normal-mode)))
 #+end_src
-
 
 *** typescript-mode
 Adds Typescript support to Emacs.
