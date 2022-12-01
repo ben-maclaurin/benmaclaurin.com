@@ -388,7 +388,7 @@ Better search:
 Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; vertico
 
   (use-package vertico
@@ -405,6 +405,16 @@ Vertico is a performant and minimalistic completion tool which extends the defau
                   ("M-DEL" . vertico-directory-delete-word))
       :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
+
+  ;; Optionally use the `orderless' completion style.
+  (use-package orderless
+      :init
+    ;; Configure a custom style dispatcher (see the Consult wiki)
+    ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+    ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion)))))
 #+end_src
 
 *** marginalia
