@@ -126,7 +126,7 @@ Set the default font size and face.
 
     (set-face-attribute 'default nil :font "Iosevka Comfy-18")
     (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy-18")
-    (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy-18")
+    (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Wide-18")
   ;;  (add-hook 'org-mode-hook 'variable-pitch-mode)
 #+end_src
 
@@ -293,6 +293,11 @@ Persist cursor locations across sessions.
       ")
 #+end_src
 
+*** Save file with CMD-S
+#+begin_src lisp :tangle ~/.emacs.d/init.el
+  (global-set-key (kbd "M-s") 'save-some-buffers)
+#+end_src
+
 ** Packages
 External packages I have installed.
 
@@ -388,13 +393,18 @@ Better search:
 Vertico is a performant and minimalistic completion tool which extends the default Emacs UI. I use it as an Ivy replacement.
 
 #+begin_src lisp :tangle ~/.emacs.d/init.el
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; vertico
 
   (use-package vertico
       :init
     (vertico-mode)
-    (setq vertico-count 20))
+    (setq vertico-count 20)
+    (setq completion-styles '(substring orderless basic))
+
+    (setq read-file-name-completion-ignore-case t
+          read-buffer-completion-ignore-case t
+          completion-ignore-case t))
 
   (use-package vertico-directory
       :after vertico
@@ -415,6 +425,8 @@ Vertico is a performant and minimalistic completion tool which extends the defau
     (setq completion-styles '(orderless basic)
           completion-category-defaults nil
           completion-category-overrides '((file (styles partial-completion)))))
+
+
 #+end_src
 
 *** marginalia
@@ -648,7 +660,8 @@ A modal editor.
    '("n" . meow-search)
    '("o" . meow-open-below)
    '("O" . meow-open-above)
-   '("p" . meow-yank)
+   ;;'("p" . meow-yank)
+   '("p" . yank)
    '("q" . meow-quit)
    '("Q" . meow-goto-line)
    '("r" . meow-replace)
@@ -666,7 +679,7 @@ A modal editor.
    '("Y" . meow-sync-grab)
    '("z" . meow-pop-selection)
    '("'" . repeat)
-   '("s" . meow-hyper-mode)
+   ;;'("s" . meow-hyper-mode)
    '("\"" . meow-hyper-string)
    '("(" . meow-hyper-paren)
    '(")" . meow-hyper-paren)
