@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://benmaclaurin.com/sitemap.xml
