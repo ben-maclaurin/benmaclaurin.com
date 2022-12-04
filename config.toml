@@ -1,4 +1,4 @@
-baseURL = "https://ben-maclaurin.github.io"
+baseURL = "https://benmaclaurin.com"
 languageCode = "en"
 defaultContentLanguage = "en"                             # en / zh-cn / ... (This field determines which i18n file to use)
 title = ""

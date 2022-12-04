@@ -72,3 +72,5 @@ but couldn't get it to work properly.
 ## Watch the video {#watch-the-video}
 
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/FiLgoZgaqYo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+> _There is a good chance parts of this post are incorrect. I'm always keen to update my ideas, so if you disagree with anything, I'd be grateful if you could [reach out via email](mailto:contact@benmaclaurin.com)._
